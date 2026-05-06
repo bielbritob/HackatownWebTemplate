@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Mercado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="form-box">
+    <h2>Cadastrar Produto</h2>
+    <input type="text" id="nome" placeholder="Nome do Produto">
+    <input type="text" id="desc" placeholder="Descrição">
+    <input type="text" id="preco" placeholder="Preço (Ex: R$ 5,99)">
+    <input type="text" id="img" placeholder="Link da imagem (URL)">
+    <button id="btn-adicionar">Adicionar Produto</button>
+</div>
+
+<div id="tabela-produtos">
+</div>
+<!-- Arquivo de validaçao de sessao do Firebase -->
+<script type="module" src="admin-script.js"></script>
+<!-- Arquivo de gestão de db do  Firebase -->
+<script type="module" src="gestao.js"></script>
+</body>
+</html>

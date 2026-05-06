@@ -1,0 +1,199 @@
+/* RESET E BASE */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+body { background-color: #f9f9f9; padding-top: 100px; }
+
+/* HEADER MODERNO */
+header {
+    position: fixed; /* ou fixed, como preferir */
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(16px); /* Efeito de vidro que os apps modernos usam */
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    z-index: 999;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #111;
+}
+
+/* sumir com o texto do catalogo em celular */
+@media (max-width: 768px) {
+    .logo-box h1 {
+        display: none /* Ajuste esse valor até ficar do tamanho que você gosta */
+    }
+}
+
+.logo-box h1 {
+    font-size: 0.9rem; /* Ajuste esse valor até ficar do tamanho que você gosta */
+}
+
+.logo-circle {
+    background-color: #2e7d32; /* Cor primária */
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container da busca (ajusta o tamanho) */
+.search-wrapper {
+    flex: 1;
+    max-width: 400px; /* Limita o tamanho da barra no PC */
+    margin: 0 20px;
+}
+
+#search {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 999px; /* Arredondamento total (pill shape) */
+    border: 1px solid #e5e7eb;
+    background: #f3f4f6;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#search:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+}
+
+/* Esconde localização no celular */
+.loc-box {
+    color: #6b7280;
+    font-size: 0.85rem;
+    display: none;
+}
+
+/* No PC, mostra a localização */
+@media (min-width: 768px) {
+    .loc-box {
+        display: block;
+    }
+}
+
+.logo-box { display: flex; ;align-items: center; font-weight: bold; font-size: 1.2em; }
+.logo-circle { background-color: #1b5e20; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 5px; }
+.search-box { width: 55%; padding: 10px; border-radius: 20px; border: 1px solid #ccc; background: #f4f4f4; margin: 0 auto; }
+.loc-box { color: #666; font-size: 0.9em; }
+
+
+.section-aviso {
+
+}
+.container-aviso {
+
+}
+
+
+
+/* GRID DE PRODUTOS */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 5%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 100fr));
+        gap: 20px;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+}
+
+.container {
+    padding: 20px 5%; /* Adicionei um padding melhor */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 350px)); /* Mudei 1fr para 350px */
+    justify-content: center; /* ISSO VAI CENTRALIZAR O CARD ÚNICO */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+/*.container {*/
+/*    padding: 0 5%;*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(auto-fit, minmax(250px, 100fr));*/
+/*    gap: 20px;*/
+/*    max-width: 300px;*/
+/*    margin: 0 auto;*/
+/*}*/
+
+
+
+
+/*Card New*/
+.card-container {
+    /* Estilo Base (o visual "popover") */
+    background-color: white;
+    border: 2px solid #e5e7eb; /* Border cinza claro */
+    border-radius: 15px; overflow: hidden; /* Rounded-md */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* shadow-md */
+
+    /* Configuração da animação */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Curva suave (ease) */
+    cursor: pointer;
+}
+
+/* CARD old*/
+/*.card-container {*/
+/*    background-color: white; border: 1px solid #e0e0e0;*/
+/*    border-radius: 15px; overflow: hidden;*/
+/*    transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+/*    display: flex; flex-direction: column;*/
+/*}*/
+
+.card-container:hover {
+    /* Efeito de "Zoom-in" e "Shadow" do Shadcn */
+    transform: scale(1.03); /* Zoom de 3% */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+    border-color: #2e7d32; /* Opcional: Borda da cor do seu projeto */
+    z-index: 10;
+}
+.card-container:hover .img-wrapper img {
+    transform: scale(1.1); /* Zoom de 10% na imagem */
+}
+/*.img-wrapper img:hover {*/
+/*    transform: scale(1.1)*/
+/*}*/
+
+/*old*/
+/*.card-container:hover { transform: translateY(-2px);*/
+/*                        box-shadow: 0 10px 20px rgba(0,0,0,0.4);*/
+/*}*/
+
+.img-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.card-body h3 { margin: 0 0 5px 0; color: #333; }
+.card-body p { margin: 0 0 10px 0; color: #666; font-size: 0.9em; }
+.card-body h4 { margin: 0 0 10px 0; color: #2e7d32; }
+.btn-wpp {
+    background-color: #006400; color: white; text-align: center;
+    padding: 10px; border-radius: 8px; text-decoration: none;
+    font-weight: bold; display: block;
+}
+.btn-wpp:hover { background-color: #008000; }
+
+
