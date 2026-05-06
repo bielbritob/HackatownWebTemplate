@@ -39,7 +39,7 @@ function renderizarProdutos(lista) {
 
 // 3. Função que busca no Firebase e salva na "caixa" (todosOsProdutos)
 async function carregarDados() {
-    container.innerHTML = "<p style='text-align: center'>Carregando produtos...</p>"; // Feedback visual
+    container.innerHTML = "<p style=' text-align: center; min-height: 500px;' >Carregando produtos...</p>"; // Feedback visual
 
     try {
         const querySnapshot = await getDocs(collection(db, "produtos"));

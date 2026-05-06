@@ -1,0 +1,182 @@
+:root {
+    --primary: #006400;;
+    --primary-foreground: #ffffff;
+    --background: #ffffff;
+    --card: #f9fafb;
+    --border: #e5e7eb;
+    --text-muted: #6b7280;
+    --text-main: #111827;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding-top: 70px;
+    color: var(--text-main);
+}
+
+/* Header */
+.header {
+    position: fixed; /* ou fixed, como preferir */
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(16px); /* Efeito de vidro que os apps modernos usam */
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    z-index: 999;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #111;
+
+}
+.logo-box h1 {
+    font-size: 1.2rem;
+}
+
+/* sumir com o texto do catalogo em celular */
+/*@media (max-width: 768px) {*/
+/*    .logo-box h1 {*/
+/*        display: none !* Ajuste esse valor até ficar do tamanho que você gosta *!*/
+/*    }*/
+/*}*/
+
+/* icone igual ao catalogo*/
+.logo-circle {
+    background-color: #006400;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px; }
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--text-main); }
+
+.btn-catalogo { background: var(--primary); color: var(--primary-foreground); padding: 8px 16px; border-radius: 999px; }
+
+
+/* Grid Cards */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+.card { background: white; border: 2px solid var(--border); padding: 24px; border-radius: 16px; transition: all 0.3s; cursor: pointer; }
+.card:hover { transform: scale(1.03); border-color: var(--primary); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.card-icon { background: var(--card); width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--primary); }
+
+/* Hero Section */
+.hero-section { padding-top: 120px;
+    padding-bottom: 64px;
+    text-align: center;
+    background-color: rgb(239 239 239 / 0.7);
+}
+.hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgb(0 100 0);
+    color: #ffffff; padding: 8px 16px;
+    border-radius: 999px; font-size: 0.9rem; font-weight: 500; margin-bottom: 24px;
+}
+.hero-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; line-height: 1.2; }
+.hero-description { font-size: 1.1rem; color: #6b7280; max-width: 600px; margin: 0 auto 32px auto; }
+.hero-actions { display: flex; flex-direction: column; gap: 16px; justify-content: center; align-items: center; }
+
+@media (min-width: 640px) { .hero-actions { flex-direction: row; } }
+
+/* Botões Hero */
+.btn-primary { background: var(--primary); color: white; padding: 16px 32px; border-radius: 999px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: transform 0.3s; }
+.btn-primary:hover { transform: scale(1.05); }
+.btn-outline {
+    background: white;
+    border: 2px solid var(--border);
+    padding: 16px 32px;
+    border-radius: 999px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+    color: black;
+}
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+
+/* Section About */
+.about-section { padding: 80px 5%; background: var(--card); }
+.about-header { text-align: center; margin-bottom: 64px; }
+.tag { color: var(--primary); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; }
+.about-header h2 { font-size: 2.5rem; margin: 12px 0; }
+.about-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem; }
+
+
+/* Cores Sociais  */
+.social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 800px; margin: 0 auto; }
+@media (min-width: 768px) { .social-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.social-btn { color: white; padding: 24px; border-radius: 16px; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 12px; transition: all 0.3s; }
+.social-btn:hover { transform: scale(1.03); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+
+.bg-whatsapp { background-color: #25D366; }
+.bg-instagram { background: linear-gradient(45deg, #833AB4, #FD1D1D, #F77737); }
+.bg-facebook { background-color: #1877F2; }
+.bg-phone { background-color: var(--primary); }
+.bg-mail { background-color: #EA4335; }
+.bg-map { background-color: #4285F4; }
+
+/* Cores Sociais (Baseado no seu código TS) */
+
+.text-contato {
+    text-align: center;
+    color: rgb(20 96 0 / 0.82);
+    margin-top: 8px;
+
+}
+.text-fale {
+    text-align: center;
+    color: black;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+.social-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 800px; margin: 0 auto; }
+@media (min-width: 768px) { .social-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.social-btn { color: white; padding: 24px; border-radius: 16px; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 12px; transition: all 0.3s; }
+.social-btn:hover { transform: scale(1.03); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+
+.bg-whatsapp { background-color: #25D366; }
+.bg-instagram { background: linear-gradient(45deg, #833AB4, #FD1D1D, #F77737); }
+.bg-facebook { background-color: #1877F2; }
+.bg-phone { background-color: var(--primary); }
+.bg-mail { background-color: #EA4335; }
+.bg-map { background-color: #4285F4; }
+
+/* Footer */
+.footer-section { background: #111827; color: white; padding: 48px 5%; margin-top: 40px; }
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem; }
+.footer-links a:hover { color: white; }
