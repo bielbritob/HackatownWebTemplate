@@ -4,7 +4,11 @@ import { collection, getDocs } from "firebase/firestore";
 // 1. Defina as variáveis globais aqui (fora de qualquer função)
 const container = document.getElementById('produtos-container');
 const inputBusca = document.getElementById('search');
+const contadorProdutos = document.getElementById('contador-Produtos');
+
+
 let todosOsProdutos = []; // Essa "caixa" guarda tudo o que vem do Firebase
+let lengthProdutos = 0
 
 // 2. Função única que desenha os cards na tela
 function renderizarProdutos(lista) {
@@ -16,7 +20,7 @@ function renderizarProdutos(lista) {
     }
 
     lista.forEach((prod) => {
-        // Usamos o template que você criou, mantendo nome, desc e preço
+        // template, nome, desc e preço
         container.innerHTML += `
             <div class="card-container">
                 <div class="img-wrapper"><img src="${prod.img}" alt="${prod.nome}"></div>
@@ -35,13 +39,16 @@ function renderizarProdutos(lista) {
 
 // 3. Função que busca no Firebase e salva na "caixa" (todosOsProdutos)
 async function carregarDados() {
-    container.innerHTML = "<p>Carregando produtos...</p>"; // Feedback visual
+    container.innerHTML = "<p style='text-align: center'>Carregando produtos...</p>"; // Feedback visual
 
     try {
         const querySnapshot = await getDocs(collection(db, "produtos"));
 
         // Transforma os dados em um array comum
         todosOsProdutos = querySnapshot.docs.map(doc => doc.data());
+
+        // Chama a funct
+        AtualizarQuantidadeProdutos(todosOsProdutos);
 
         // Mostra tudo inicialmente
         renderizarProdutos(todosOsProdutos);
@@ -65,6 +72,16 @@ if (inputBusca) { // Verifica se o input existe para não dar erro
         renderizarProdutos(filtrados);
     });
 }
+
+function AtualizarQuantidadeProdutos(todosOsProdutos) {
+    // Quantidade de Produtos
+    lengthProdutos = todosOsProdutos.length
+    //console.log(lengthProdutos)
+    //console.log(todosOsProdutos);
+    contadorProdutos.textContent = lengthProdutos + " Produtos";
+    //console.log(contadorProdutos.textContent);
+}
+
 
 // 5. Inicia tudo ao carregar a página
 carregarDados();

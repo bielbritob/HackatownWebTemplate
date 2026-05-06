@@ -92,11 +92,66 @@ header {
 
 
 .section-aviso {
+    padding: 0 5%;
 
 }
 .container-aviso {
+    background-color: rgb(185 227 185 / 0.58);
+    padding: 20px;
+    color: black;
+    font-weight: bold;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 0 solid #000000;
+}
+
+.header-texto-aviso {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
 
 }
+
+.texto-small-aviso {
+    text-align: left;
+    font-weight: normal;
+    font-size: 0.8rem;
+    color: #666666;
+}
+
+
+@media (max-width: 768px) {
+    .produtos-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 20px auto 10px auto;
+        padding: 0 5%
+    }
+}
+
+
+
+.produtos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 20px auto 10px auto;
+}
+.titulo-secao {
+    font-size: 1.5rem;
+    color: #333;
+}
+.produtos-contador {
+    color: #666666;
+}
+
+
 
 
 
