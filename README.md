@@ -26,7 +26,8 @@
 
 ### URLs:
 
-*   **Landing Page:** [http://localhost:5173/LandingPage/index.html](http://localhost:5173/LandingPage/index.html)
+*   **Landing Page:** [http://localhost:5173/Landing/index.html](http://localhost:5173/LandingPage/index.html)
+*   *Vitrine:** [http://localhost:5173/vitrine/index.html](http://localhost:5173/LandingPage/index.html)
 *   **Admin Login:** [http://localhost:5173/AdminLoginPage/LoginAdmin.html](http://localhost:5173/AdminLoginPage/LoginAdmin.html)
 *   **Admin Panel:** [http://localhost:5173/AdminPage/admin.html](http://localhost:5173/AdminPage/admin.html)
 ### Firebase:
