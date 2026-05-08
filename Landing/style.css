@@ -1,10 +1,10 @@
 :root {
-    --primary: #006400;;
+    --primary: #f29130;;
     --primary-foreground: #ffffff;
     --background: #ffffff;
     --card: #f9fafb;
     --border: #e5e7eb;
-    --text-muted: #6b7280;
+    --text-muted: #494949;
     --text-main: #111827;
 }
 
@@ -54,7 +54,7 @@ body {
 
 /* icone igual ao catalogo*/
 .logo-circle {
-    background-color: #006400;
+    background-color: #f29130;
     color: white;
     width: 40px;
     height: 40px;
@@ -90,9 +90,19 @@ body {
     transition: color 0.3s;
 }
 
+
 .nav-links a:hover { color: var(--text-main); }
 
-.btn-catalogo { background: var(--primary); color: var(--primary-foreground); padding: 8px 16px; border-radius: 999px; }
+.btn-catalogo {
+    color: white !important; /* Força a cor do texto para branco */
+    text-decoration: none;   /* Remove o sublinhado padrão de links */
+    background-color: #f29130; /* Cor laranja do seu logo */
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background 0.3s ease;
+}
 
 
 /* Grid Cards */
@@ -109,7 +119,7 @@ body {
 }
 .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgb(0 100 0);
+    background: rgb(242 145 48);
     color: #ffffff; padding: 8px 16px;
     border-radius: 999px; font-size: 0.9rem; font-weight: 500; margin-bottom: 24px;
 }

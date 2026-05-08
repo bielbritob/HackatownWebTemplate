@@ -6,6 +6,9 @@ const container = document.getElementById('produtos-container');
 const inputBusca = document.getElementById('search');
 const contadorProdutos = document.getElementById('contador-Produtos');
 
+const variavel = document.getElementById('search');
+
+
 
 let todosOsProdutos = []; // Essa "caixa" guarda tudo o que vem do Firebase
 let lengthProdutos = 0

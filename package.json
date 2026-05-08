@@ -9,7 +9,7 @@
   },
   "private": true,
   "dependencies": {
-    "firebase": "^12.12.1"
+    "firebase": "^12.13.0"
   },
   "devDependencies": {
     "vite": "^8.0.10"
