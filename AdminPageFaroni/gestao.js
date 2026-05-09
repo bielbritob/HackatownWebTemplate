@@ -14,8 +14,12 @@ async function listarProdutosAdmin() {
 
         produtos.forEach((prod) => {
             container.innerHTML += `
-                <div class="card-admin" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                    <h3>${prod.nome}</h3>
+                <div class="card-admin">
+                 <div class="img-wrapper" style="width: 40px; hepx; margin: 0 auto">
+                    <img src="${prod.img}" alt="${prod.nome}">
+                 </div>
+                    <h4>${prod.nome}</h4>
+                    <h4>${prod.desc}</h4>
                     <p>Preço: ${prod.preco}</p>
                     <button onclick="deletarProduto(${prod.id})">🗑️ Deletar</button>
                     <button onclick="prepararEdicao(${JSON.stringify(prod).replace(/"/g, '&quot;')})">✏️ Editar Completo</button>
