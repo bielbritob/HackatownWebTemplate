@@ -1,5 +1,5 @@
 :root {
-    --primary: #f29130;;
+    --primary: #0082D1;;
     --primary-foreground: #ffffff;
     --background: #ffffff;
     --card: #f9fafb;
@@ -23,7 +23,7 @@ body {
     height: 70px;
     background: rgba(255, 255, 255, 0.70);
     backdrop-filter: blur(16px); /* Efeito de vidro que os apps modernos usam */
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 3px solid #0082D1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,6 +43,14 @@ body {
 }
 .logo-box h1 {
     font-size: 1.2rem;
+    margin-left: 70px;
+}
+
+.img-container {
+    width: 90px; /* Ajuste para o tamanho da logo Faroni */
+    display: flex;
+    align-items: center;
+    margin-left: 70px;
 }
 
 /* sumir com o texto do catalogo em celular */
@@ -54,14 +62,17 @@ body {
 
 /* icone igual ao catalogo*/
 .logo-circle {
-    background-color: #f29130;
+    background-color: white;
     color: white;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+
+}
+
 
 @media (max-width: 768px) {
     .nav-links {
@@ -96,7 +107,7 @@ body {
 .btn-catalogo {
     color: white !important; /* Força a cor do texto para branco */
     text-decoration: none;   /* Remove o sublinhado padrão de links */
-    background-color: #f29130; /* Cor laranja do seu logo */
+    background-color: #0082D1; /* Cor laranja do seu logo */
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: bold;
@@ -115,11 +126,12 @@ body {
 .hero-section { padding-top: 120px;
     padding-bottom: 64px;
     text-align: center;
-    background-color: rgb(239 239 239 / 0.7);
+    /*background-color: rgb(239 239 239 / 0.7);*/
+    background: rgb(0 130 209 / 0.09);
 }
 .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgb(242 145 48);
+    background: #0082D1;
     color: #ffffff; padding: 8px 16px;
     border-radius: 999px; font-size: 0.9rem; font-weight: 500; margin-bottom: 24px;
 }

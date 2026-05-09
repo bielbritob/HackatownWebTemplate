@@ -42,7 +42,7 @@ header {
 .logo-box h1 { font-size: 1.2rem; font-weight: bold; text-transform: uppercase; }
 
 .img-container {
-    width: 120px; /* Ajuste para o tamanho da logo Faroni */
+    width: 65px; /* Ajuste para o tamanho da logo Faroni */
     display: flex;
     align-items: center;
 }
@@ -95,7 +95,7 @@ header {
 .texto-small-aviso {
     text-align: left;
     font-size: 0.9rem;
-    color: #666;
+    color: #0082D1;
 }
 
 /* GRID E PRODUTOS */
@@ -155,7 +155,7 @@ header {
 }
 
 .btn-wpp:hover {
-    background-color: #0082d1;
+    background-color: #004a77;
     color: white;
 }
 
