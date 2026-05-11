@@ -1,0 +1,60 @@
+/**
+ * Tema global — personalize aqui para cada cliente (cores da marca).
+ * Todas as páginas devem incluir este ficheiro antes do style.css local.
+ */
+:root {
+    /* Marca */
+    --primary: #0082d1;
+    --primary-hover: #005a99;
+    --primary-dark: #00507e;
+    --primary-pressed: #004a77;
+    --primary-foreground: #ffffff;
+    --primary-rgb: 0, 130, 209;
+    --primary-muted-bg: #e6f4ff;
+    --accent: #f2711c;
+    --accent-cyan: #00c2ff;
+    --accent-cyan-rgb: 0, 194, 255;
+
+    /* Superfícies */
+    --background: #ffffff;
+    --background-page: #f4f6f8;
+    --background-login: #f4f4f4;
+    --card: #f9fafb;
+    --card-img-bg: #f9f9f9;
+    --border: #e5e7eb;
+    --input-border: #d1d5db;
+    --input-border-soft: #dddddd;
+
+    /* Texto */
+    --text-main: #111827;
+    --text-heading: #111111;
+    --text-body: #1f2937;
+    --text-muted: #494949;
+    --text-soft: #6b7280;
+    --text-label: #555555;
+    --text-subtle: #888888;
+    --text-empty: #9ca3af;
+
+    /* Cabeçalho (vidro) */
+    --header-surface: rgba(255, 255, 255, 0.95);
+    --header-surface-alt: rgba(255, 255, 255, 0.9);
+
+    /* Rodapé */
+    --footer-bg: #111827;
+    --footer-text: #ffffff;
+    --footer-link: rgba(255, 255, 255, 0.7);
+    --footer-link-hover: var(--accent-cyan);
+
+    /* Estados / feedback */
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+    --danger-bg-hover: #fee2e2;
+    --info-bg: #eff6ff;
+    --info-bg-hover: #dbeafe;
+
+    /* Avisos / secções */
+    --aviso-text: #333333;
+
+    /* Sombras genéricas */
+    --shadow-soft: rgba(0, 0, 0, 0.1);
+}
