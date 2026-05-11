@@ -1,19 +1,21 @@
-/* Isso vai no style.css */
+/* Cores: ../theme.css */
+
 body {
     margin: 0;
     padding: 0;
-    height: 100vh; /* Ocupa 100% da altura da tela */
+    height: 100vh;
     display: grid;
-    place-items: center; /* Centraliza tudo (vertical e horizontal) */
-    background-color: #f4f4f4;
+    place-items: center;
+    background-color: var(--background-login);
     font-family: sans-serif;
 }
 
+.login-form,
 .form-box {
-    background: white;
+    background: var(--background);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Sombra suave pra ficar bonito */
+    box-shadow: 0 4px 15px var(--shadow-soft);
     width: 300px;
     text-align: center;
 }
@@ -22,16 +24,16 @@ input {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-border-soft);
     border-radius: 6px;
-    box-sizing: border-box; /* Importante para o padding não quebrar o tamanho */
+    box-sizing: border-box;
 }
 
 button {
     width: 100%;
     padding: 12px;
-    background-color: #0082d1; /* Verde escuro */
-    color: white;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
     border: none;
     border-radius: 6px;
     cursor: pointer;

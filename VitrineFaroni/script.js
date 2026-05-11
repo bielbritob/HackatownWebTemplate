@@ -20,8 +20,8 @@ function renderizarProdutos(lista) {
                 <div class="img-wrapper"><img src="${prod.img}" alt="${prod.nome}"></div>
                 <div class="card-body">
                     <h3>${prod.nome}</h3>
-                    <p>${prod.desc}</p>
-                    <h4>${prod.preco}</h4>
+                    <p>${prod.descricao}</p>
+                    <h4>R$${prod.preco}</h4>
                     <a href="https://wa.me/5569999999999?text=Quero o produto ${prod.nome}" class="btn-wpp">
                         🟢 Pedir via WhatsApp
                     </a>

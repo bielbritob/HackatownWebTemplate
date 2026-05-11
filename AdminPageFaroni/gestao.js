@@ -1,7 +1,37 @@
+// ==========================================
+// CONFIGURAÇÃO DA API
+// Altere para o caminho do seu PHP no XAMPP
+// ==========================================
 const API_URL = 'http://localhost/projeto_01_hackatown/api/admin_produtos.php';
 
-// 1. Listar Produtos
-async function listarProdutosAdmin() {
+// ==========================================
+// UTILITÁRIOS
+// ==========================================
+function mostrarNotif(msg) {
+    const notif = document.getElementById('notif');
+    notif.textContent = msg;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 2800);
+}
+
+function atualizarContador(lista) {
+    const contador = document.getElementById('contador-admin');
+    contador.textContent = lista.length + (lista.length === 1 ? ' produto' : ' produtos');
+}
+
+function limparForm() {
+    ['nome', 'preco', 'desc', 'img'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
+}
+
+// ==========================================
+// 1. LISTAR PRODUTOS
+// ==========================================
+async function listarProdutos() {
+    const container = document.getElementById('tabela-produtos');
+    container.innerHTML = '<p style="text-align:center;color:#9ca3af;grid-column:1/-1;">Carregando produtos...</p>';
+
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -9,38 +39,75 @@ async function listarProdutosAdmin() {
         });
         const produtos = await response.json();
 
-        const container = document.getElementById('tabela-produtos');
-        container.innerHTML = "";
-
-        produtos.forEach((prod) => {
-            container.innerHTML += `
-                <div class="card-admin">
-                 <div class="img-wrapper" style="width: 40px; hepx; margin: 0 auto">
-                    <img src="${prod.img}" alt="${prod.nome}">
-                 </div>
-                    <h4>${prod.nome}</h4>
-                    <h4>${prod.desc}</h4>
-                    <p>Preço: ${prod.preco}</p>
-                    <button onclick="deletarProduto(${prod.id})">🗑️ Deletar</button>
-                    <button onclick="prepararEdicao(${JSON.stringify(prod).replace(/"/g, '&quot;')})">✏️ Editar Completo</button>
-                </div>
-            `;
-        });
+        atualizarContador(produtos);
+        renderizarCards(produtos);
     } catch (error) {
-        console.error("Erro ao listar:", error);
+        console.error('Erro ao listar:', error);
+        container.innerHTML = '<p style="text-align:center;color:#dc2626;grid-column:1/-1;">Erro ao carregar produtos.</p>';
     }
 }
 
-// 2. Adicionar Produto
-async function adicionarProduto(event) {
-    event.preventDefault();
+// ==========================================
+// 2. RENDERIZAR CARDS NA TELA
+// ==========================================
+function renderizarCards(produtos) {
+    const container = document.getElementById('tabela-produtos');
+
+    if (produtos.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <span class="empty-icon">📦</span>
+                Nenhum produto cadastrado ainda.
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = produtos.map(prod => `
+        <div class="card-admin" id="card-${prod.id}">
+            <div class="card-img">
+                <img
+                    src="${prod.img}"
+                    alt="${prod.nome}"
+                    onerror="this.src='https://via.placeholder.com/300x200?text=Sem+imagem'"
+                >
+            </div>
+            <div class="card-info">
+                <h3 title="${prod.nome}">${prod.nome}</h3>
+                <p class="desc">${prod.descricao || 'Sem descrição'}</p>
+                <div class="preco">R$${prod.preco}</div>
+                <div class="card-actions">
+                    <button class="btn-del" onclick="deletarProduto(${prod.id})">
+                        🗑️ Deletar
+                    </button>
+                    <button class="btn-edit" onclick="prepararEdicao(${JSON.stringify(prod).replace(/"/g, '&quot;')})">
+                        ✏️ Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// 3. ADICIONAR PRODUTO
+// ==========================================
+async function adicionarProduto() {
+    const nome  = document.getElementById('nome').value.trim();
+    const preco = document.getElementById('preco').value.trim();
+    const desc  = document.getElementById('desc').value.trim();
+    const img   = document.getElementById('img').value.trim();
+
+    if (!nome || !preco) {
+        mostrarNotif('⚠️ Nome e preço são obrigatórios!');
+        return;
+    }
 
     const dados = {
         action: 'adicionar',
-        nome: document.getElementById('nome').value,
-        preco: document.getElementById('preco').value,
-        desc: document.getElementById('desc').value,
-        img: document.getElementById('img').value
+        nome,
+        preco,
+        desc,
+        img
     };
 
     try {
@@ -51,40 +118,53 @@ async function adicionarProduto(event) {
         const result = await response.json();
 
         if (result.success) {
-            alert("Produto cadastrado com sucesso!");
-            document.getElementById('form-produto').reset(); // Limpa o form
-            listarProdutosAdmin();
+            mostrarNotif('✅ Produto adicionado com sucesso!');
+            limparForm();
+            listarProdutos();
+        } else {
+            mostrarNotif('❌ Erro ao adicionar produto.');
         }
     } catch (error) {
-        console.error("Erro ao adicionar:", error);
+        console.error('Erro ao adicionar:', error);
+        mostrarNotif('❌ Erro de conexão com o servidor.');
     }
 }
 
-// 3. Deletar Produto
+// ==========================================
+// 4. DELETAR PRODUTO
+// ==========================================
 window.deletarProduto = async (id) => {
-    if (confirm("Certeza que quer excluir este produto?")) {
+    if (!confirm('Certeza que quer excluir este produto?')) return;
+
+    try {
         await fetch(API_URL, {
             method: 'POST',
-            body: JSON.stringify({ action: 'deletar', id: id })
+            body: JSON.stringify({ action: 'deletar', id })
         });
-        listarProdutosAdmin();
+        mostrarNotif('🗑️ Produto removido.');
+        listarProdutos();
+    } catch (error) {
+        console.error('Erro ao deletar:', error);
+        mostrarNotif('❌ Erro ao remover produto.');
     }
 };
 
-// 4. Editar Produto (Modificando todas as strings)
+// ==========================================
+// 5. EDITAR PRODUTO
+// ==========================================
 window.prepararEdicao = async (prod) => {
-    const novoNome = prompt("Novo nome:", prod.nome) || prod.nome;
-    const novoPreco = prompt("Novo preço:", prod.preco) || prod.preco;
-    const novaDesc = prompt("Nova descrição:", prod.descricao) || prod.descricao;
-    const novaImg = prompt("Nova URL da imagem:", prod.img) || prod.img;
+    const novoNome  = prompt('Novo nome:', prod.nome)        || prod.nome;
+    const novoPreco = prompt('Novo preço:', prod.preco)      || prod.preco;
+    const novaDesc  = prompt('Nova descrição:', prod.descricao) || prod.descricao;
+    const novaImg   = prompt('Nova URL da imagem:', prod.img) || prod.img;
 
     const dadosEdicao = {
         action: 'editar',
-        id: prod.id,
-        nome: novoNome,
-        preco: novoPreco,
-        desc: novaDesc,
-        img: novaImg
+        id:     prod.id,
+        nome:   novoNome,
+        preco:  novoPreco,
+        desc:   novaDesc,
+        img:    novaImg
     };
 
     try {
@@ -93,17 +173,25 @@ window.prepararEdicao = async (prod) => {
             body: JSON.stringify(dadosEdicao)
         });
         const result = await response.json();
+
         if (result.success) {
-            alert("Produto atualizado!");
-            listarProdutosAdmin();
+            mostrarNotif('✏️ Produto atualizado!');
+            listarProdutos();
+        } else {
+            mostrarNotif('❌ Erro ao atualizar produto.');
         }
     } catch (error) {
-        console.error("Erro ao editar:", error);
+        console.error('Erro ao editar:', error);
+        mostrarNotif('❌ Erro de conexão com o servidor.');
     }
 };
 
-// Event Listeners
+// ==========================================
+// EVENT LISTENERS
+// ==========================================
 document.getElementById('btn-adicionar').addEventListener('click', adicionarProduto);
 
-// Inicialização
-listarProdutosAdmin();
+// ==========================================
+// INICIALIZAÇÃO
+// ==========================================
+listarProdutos();

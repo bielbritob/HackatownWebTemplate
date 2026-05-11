@@ -1,21 +1,23 @@
+/* Cores: ../theme.css */
+
 /* RESET E BASE */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
 body {
-    background-color: #f4f6f8; /* Fundo levemente frio para combinar com o azul */
+    background-color: var(--background-page);
     padding-top: 99px;
     min-height: 100vh;
     margin: 0;
 }
 
-/* HEADER MODERNO - FARONI */
+/* HEADER */
 header {
     position: fixed;
     top: 0;
     width: 100%;
     height: 70px;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--header-surface-alt);
     backdrop-filter: blur(16px);
-    border-bottom: 3px solid #0082D1; /* Linha azul característica da logo */
+    border-bottom: 3px solid var(--primary);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -28,7 +30,7 @@ header {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: #0082D1; /* Texto azul */
+    color: var(--primary);
 }
 
 @media (max-width: 768px) {
@@ -42,12 +44,12 @@ header {
 .logo-box h1 { font-size: 1.2rem; font-weight: bold; text-transform: uppercase; }
 
 .img-container {
-    width: 65px; /* Ajuste para o tamanho da logo Faroni */
+    width: 65px;
     display: flex;
     align-items: center;
 }
 
-/* BUSCA - ESTILO FARONI */
+/* BUSCA */
 .search-wrapper {
     flex: 1;
     max-width: 400px;
@@ -58,30 +60,30 @@ header {
     width: 100%;
     padding: 12px 20px;
     border-radius: 999px;
-    border: 1px solid #0082D1; /* Borda azul */
-    background: #fff;
+    border: 1px solid var(--primary);
+    background: var(--background);
     outline: none;
     transition: all 0.3s;
 }
 
 #search:focus {
-    border-color: #00C2FF;
-    box-shadow: 0 0 0 2px rgba(0, 194, 255, 0.2);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 2px rgba(var(--accent-cyan-rgb), 0.2);
 }
 
-/* AVISO - DESTAQUE EM AZUL E LARANJA */
+/* AVISO */
 .section-aviso { padding: 0 5%; }
 
 .container-aviso {
-    background-color: rgba(0, 130, 209, 0.05);
+    background-color: rgba(var(--primary-rgb), 0.05);
     padding: 20px;
-    color: #333;
+    color: var(--aviso-text);
     font-weight: bold;
     border-radius: 12px;
     text-align: center;
     max-width: 1200px;
     margin: 0 auto;
-    border: 1px solid #0082D1;
+    border: 1px solid var(--primary);
 }
 
 .header-texto-aviso {
@@ -89,13 +91,13 @@ header {
     font-weight: bold;
     margin-bottom: 5px;
     font-size: 1.2rem;
-    color: #F2711C; /* Laranja da logo para o título do aviso */
+    color: var(--accent);
 }
 
 .texto-small-aviso {
     text-align: left;
     font-size: 0.9rem;
-    color: #0082D1;
+    color: var(--primary);
 }
 
 /* GRID E PRODUTOS */
@@ -108,7 +110,7 @@ header {
     padding: 0 5%;
 }
 
-.titulo-secao { font-size: 1.5rem; color: #111; border-left: 5px solid #0082D1; padding-left: 15px; }
+.titulo-secao { font-size: 1.5rem; color: var(--text-heading); border-left: 5px solid var(--primary); padding-left: 15px; }
 
 .container {
     padding: 20px 5%;
@@ -119,10 +121,10 @@ header {
     margin: 0 auto;
 }
 
-/* CARD - CLEAN E MODERNO */
+/* CARD */
 .card-container {
-    background-color: white;
-    border: 1px solid #e5e7eb;
+    background-color: var(--background);
+    border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -130,21 +132,20 @@ header {
 
 .card-container:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 130, 209, 0.1);
-    border-color: #0082D1;
+    box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.1);
+    border-color: var(--primary);
 }
 
-.img-wrapper { width: 100%; height: 220px; overflow: hidden; background: #f9f9f9; }
+.img-wrapper { width: 100%; height: 220px; overflow: hidden; background: var(--card-img-bg); }
 .img-wrapper img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
 
 .card-body { padding: 20px; }
-.card-body h3 { font-size: 1.05rem; margin-bottom: 8px; color: #1f2937; height: 40px; overflow: hidden; }
-.card-body h4 { color: #0082D1; font-size: 1.4rem; margin-bottom: 15px; }
+.card-body h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text-body); height: 40px; overflow: hidden; }
+.card-body h4 { color: var(--primary); font-size: 1.4rem; margin-bottom: 15px; }
 
-/* BOTÃO DE COMPRA - LARANJA (Cor de conversão) */
 .btn-wpp {
-    background-color: #0082D1; /* Laranja para chamar atenção */
-    color: #fff;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
     text-align: center;
     padding: 12px;
     border-radius: 8px;
@@ -155,14 +156,14 @@ header {
 }
 
 .btn-wpp:hover {
-    background-color: #004a77;
-    color: white;
+    background-color: var(--primary-pressed);
+    color: var(--primary-foreground);
 }
 
 /* FOOTER */
 .footer-section {
-    background: #003a5d; /* Azul escuro da família Faroni */
-    color: white;
+    background: var(--footer-bg);
+    color: var(--footer-text);
     padding: 50px 10%;
     margin-top: 50px;
 }
@@ -180,5 +181,5 @@ header {
     margin-top: 15px;
 }
 
-.footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; }
-.footer-links a:hover { color: #00C2FF; }
+.footer-links a { color: var(--footer-link); text-decoration: none; }
+.footer-links a:hover { color: var(--footer-link-hover); }
