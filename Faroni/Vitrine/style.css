@@ -71,6 +71,22 @@ header {
     box-shadow: 0 0 0 2px rgba(var(--accent-cyan-rgb), 0.2);
 }
 
+.loc-box {
+    font-size: 12px;
+    color: var(--text-subtle);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .loc-box {
+        font-size: 9px;
+        color: var(--text-subtle);
+        font-weight: 600;
+        margin-right: 4px;
+        margin-left: 9px;
+    }
+}
+
 /* AVISO */
 .section-aviso { padding: 0 5%; }
 
@@ -109,6 +125,16 @@ header {
     margin: 20px auto 10px auto;
     padding: 0 5%;
 }
+
+.produtos-contador {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 700;
+    background: var(--primary-muted-bg);
+    padding: 5px 16px;
+    border-radius: 999px;
+}
+
 
 .titulo-secao { font-size: 1.5rem; color: var(--text-heading); border-left: 5px solid var(--primary); padding-left: 15px; }
 

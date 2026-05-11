@@ -1,4 +1,4 @@
-import { db } from '../firebase.js';
+import { db } from '../../firebase.js';
 import { collection, getDocs } from "firebase/firestore";
 
 // 1. Defina as variáveis globais aqui (fora de qualquer função)

@@ -29,10 +29,7 @@
 
 ### URLs:
 
-*   **Landing Page:** [http://localhost:5173/Landing/index.html](http://localhost:5173/LandingFaroni/index.html)
-*   *Vitrine:** [http://localhost:5173/vitrine/index.html](http://localhost:5173/VitrineFaroni/index.html)
-*   **Admin Login:** [http://localhost:5173/AdminLoginPage/LoginAdmin.html](http://localhost:5173/AdminLoginPageFaroni/LoginAdmin.html)
-*   **Admin Panel:** [http://localhost:5173/AdminPage/admin.html](http://localhost:5173/AdminPageFaroni/admin.html)
-### Firebase:
-
-*   [Firebase Console - Firestore Database](https://console.firebase.google.com/u/0/project/webtemplatetest-43d64/firestore/databases/-default-/data/~2Fprodutos~2FN8kBybciOMa2DR5myGxp)
+*   **Landing Page:** [LandingPage](http://localhost:5173/faroni/Landing/index.html)
+*   *Vitrine:** [Vitrine](http://localhost:5173/faroni/Vitrine/index.html)
+*   **Admin Login:** [LoginAdmin](http://localhost:5173/Faroni/LoginAdmin/LoginAdmin.html)
+*   **Admin Panel:** [AdminPanel](http://localhost:5173/Faroni/AdminPage/Admin.html)

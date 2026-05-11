@@ -25,7 +25,7 @@ async function tryLogin() {
             console.log("Logged com sucesso");
             // Salva um "token" simples no navegador para fingir uma sessão
             localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = '../AdminPageFaroni/admin.html';
+            window.location.href = '../AdminPage/admin.html';
         } else {
             alert("Erro no login: " + result.message);
         }
