@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin | Faroni Distribuidora & Papelaria</title>
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="adm-header">
+    <div class="logo-box">
+        <div class="logo-circle">
+            <img src="../../assets/faroni_ico.jpg" alt="Logo Faroni" onerror="this.style.display='none'">
+        </div>
+        <h1>Faroni LTDA</h1>
+    </div>
+    <span class="admin-badge">PAINEL ADMIN</span>
+    <div class="loc-box">ARIQUEMES, RO</div>
+</header>
+
+<div class="page-body">
+
+    <!-- Formulário de Cadastro -->
+    <div class="form-card">
+        <h2>
+            <span class="icon-title">＋</span>
+            Cadastrar produto
+        </h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="nome">Nome do produto</label>
+                <input type="text" id="nome" placeholder="Ex: Caneta Azul BIC">
+            </div>
+            <div class="form-group">
+                <label for="preco">Preço</label>
+                <input type="text" id="preco" placeholder="Ex: R$ 5,99">
+            </div>
+            <div class="form-group form-full">
+                <label for="desc">Descrição</label>
+                <input type="text" id="desc" placeholder="Breve descrição do produto">
+            </div>
+            <div class="form-group form-full">
+                <label for="img">URL da imagem</label>
+                <input type="text" id="img" placeholder="https://exemplo.com/imagem.jpg">
+            </div>
+        </div>
+        <button class="btn-add" id="btn-adicionar">
+            + Adicionar produto
+        </button>
+    </div>
+
+    <!-- Cabeçalho da listagem -->
+    <div class="produtos-header">
+        <h2 class="titulo-secao">Produtos cadastrados</h2>
+        <span class="contador" id="contador-admin">Carregando...</span>
+    </div>
+
+    <!-- Grid de Cards -->
+    <div class="cards-grid" id="tabela-produtos">
+        <p style="text-align:center; color:#9ca3af;">Carregando produtos...</p>
+    </div>
+
+</div>
+
+<!-- Notificação Toast -->
+<div class="notif" id="notif"></div>
+
+<!-- Arquivo de validação de sessão do Firebase -->
+<script type="module" src="admin-script.js"></script>
+<!-- Arquivo de gestão do Firebase/backend -->
+<script type="module" src="gestao.js"></script>
+<!-- Lógica do painel admin -->
+<script src="admin-painel.js"></script>
+
+</body>
+</html>

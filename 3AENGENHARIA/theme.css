@@ -1,0 +1,59 @@
+/**
+ * Tema global — 3A Engenharia
+ */
+:root {
+    /* Marca */
+    --primary: #E8711A;
+    --primary-hover: #C95E0E;
+    --primary-dark: #B05210;
+    --primary-pressed: #9E4A0E;
+    --primary-foreground: #ffffff;
+    --primary-rgb: 232, 113, 26;
+    --primary-muted-bg: #fef3ea;
+    --accent: #C95E0E;
+    --accent-cyan: #ff9f50;
+    --accent-cyan-rgb: 255, 159, 80;
+
+    /* Superfícies */
+    --background: #ffffff;
+    --background-page: #faf7f4;
+    --background-login: #f5f0eb;
+    --card: #fdf9f6;
+    --card-img-bg: #f9f6f3;
+    --border: #e8ddd4;
+    --input-border: #d4c4b5;
+    --input-border-soft: #e0d0c0;
+
+    /* Texto */
+    --text-main: #1A1A1A;
+    --text-heading: #111111;
+    --text-body: #2a2a2a;
+    --text-muted: #4a4a4a;
+    --text-soft: #6b6560;
+    --text-label: #555555;
+    --text-subtle: #888480;
+    --text-empty: #a09890;
+
+    /* Cabeçalho (vidro) */
+    --header-surface: rgba(255, 255, 255, 0.95);
+    --header-surface-alt: rgba(255, 255, 255, 0.9);
+
+    /* Rodapé */
+    --footer-bg: #1A1A1A;
+    --footer-text: #ffffff;
+    --footer-link: rgba(255, 255, 255, 0.7);
+    --footer-link-hover: #ff9f50;
+
+    /* Estados / feedback */
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+    --danger-bg-hover: #fee2e2;
+    --info-bg: #fef3ea;
+    --info-bg-hover: #fde8d0;
+
+    /* Avisos / secções */
+    --aviso-text: #2a2a2a;
+
+    /* Sombras genéricas */
+    --shadow-soft: rgba(0, 0, 0, 0.1);
+}
