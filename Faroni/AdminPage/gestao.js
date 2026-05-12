@@ -68,7 +68,7 @@ function renderizarCards(produtos) {
                 <img
                     src="${prod.img}"
                     alt="${prod.nome}"
-                    onerror="this.src='https://via.placeholder.com/300x200?text=Sem+imagem'"
+      
                 >
             </div>
             <div class="card-info">
@@ -123,6 +123,8 @@ async function adicionarProduto() {
             listarProdutos();
         } else {
             mostrarNotif('❌ Erro ao adicionar produto.');
+            console.log(result);
+
         }
     } catch (error) {
         console.error('Erro ao adicionar:', error);
