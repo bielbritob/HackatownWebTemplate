@@ -1,19 +1,35 @@
 {
-  "name": "WebTemplate",
+  "name": "hackatown-web-template",
   "version": "1.0.0",
-  "description": "",
-  "main": "Faroni/Vitrine/index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
-  },
+  "description": "Template multi-marca: vitrine, admin, API PHP, bot WhatsApp e painel de atendimento.",
   "private": true,
-  "dependencies": {
-    "mysql2": "^3.22.3",
-    "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.34.7"
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "bot": "node bot-wpp/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bielbritob/HackatownWebTemplate.git"
+  },
+  "keywords": [
+    "hackathon",
+    "vite",
+    "whatsapp",
+    "template"
+  ],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "vite": "^8.0.10"
+  },
+  "bugs": {
+    "url": "https://github.com/bielbritob/HackatownWebTemplate/issues"
+  },
+  "homepage": "https://github.com/bielbritob/HackatownWebTemplate#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
   }
 }

@@ -1,15 +1,27 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const { setWhatsAppClient } = require('./clientRegistry');
+const { processarMensagem } = require('./ProcesMSG');
 
 const client = new Client({
-  authStrategy: new LocalAuth(), // salva sessão, não precisa escanear toda vez
+  authStrategy: new LocalAuth(),
+  webVersionCache: {
+    type: 'remote',
+    remotePath:
+      'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.3000.1012158737-alpha.html'
+  },
   puppeteer: {
     headless: true,
-    args: ['--no-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--no-first-run',
+      '--disable-gpu'
+    ]
   }
 });
 
-// Mostra QR code no terminal pra você escanear
 client.on('qr', (qr) => {
   console.log('📱 Escaneie o QR code abaixo com seu WhatsApp:');
   qrcode.generate(qr, { small: true });
@@ -17,11 +29,35 @@ client.on('qr', (qr) => {
 
 client.on('ready', () => {
   console.log('✅ Bot conectado e pronto!');
+  setWhatsAppClient(client);
+  require('./server').startServer();
 });
 
-// Aqui é onde toda mensagem chega
 client.on('message', async (msg) => {
-  await processarMensagem(msg);
+  if (msg.from.endsWith('@g.us')) return;
+  try {
+    await processarMensagem(msg);
+  } catch (e) {
+    console.error('Erro em processarMensagem:', e);
+  }
+});
+
+client.on('authenticated', () => {
+  console.log('🔐 Autenticado! Carregando...');
+});
+
+client.on('auth_failure', (msg) => {
+  console.error('❌ Falha na autenticação:', msg);
+});
+
+client.on('loading_screen', (percent, message) => {
+  console.log('⏳ Carregando:', percent, '%', message);
+});
+
+client.on('disconnected', (reason) => {
+  console.log('🔌 Desconectado:', reason);
 });
 
 client.initialize();
+
+module.exports = { client };

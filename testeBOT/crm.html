@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Meu CRM WhatsApp</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, textarea { display: block; margin-bottom: 10px; width: 300px; }
+  </style>
+</head>
+<body>
+<h2>Enviar Mensagem (CRM)</h2>
+<input type="text" id="numero" placeholder="Ex: 5511999998888">
+<textarea id="mensagem" placeholder="Digite sua mensagem aqui..."></textarea>
+<button onclick="enviarParaWhatsapp()">Enviar Agora</button>
+
+<p id="feedback"></p>
+
+<script>
+  async function enviarParaWhatsapp() {
+    const numero = document.getElementById('numero').value;
+    const mensagem = document.getElementById('mensagem').value;
+    const feedback = document.getElementById('feedback');
+
+    feedback.innerText = "Enviando...";
+
+    try {
+      const response = await fetch('http://localhost:3000/enviar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ numero, mensagem })
+      });
+
+      const data = await response.json();
+      feedback.innerText = data.status === 'Sucesso' ? "✅ Enviado com sucesso!" : "❌ Erro ao enviar.";
+    } catch (err) {
+      feedback.innerText = "❌ Servidor do bot está desligado.";
+    }
+  }
+</script>
+</body>
+</html>

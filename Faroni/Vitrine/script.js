@@ -15,6 +15,9 @@ function renderizarProdutos(lista) {
   }
 
   lista.forEach((prod) => {
+    const texto = `Olá! Vim pelo site e me interessei pelo produto: *${prod.nome}* (R$ ${prod.preco}) `;
+    const linkWpp = `https://wa.me/5569993652104?text=${encodeURIComponent(texto)}`;
+
     container.innerHTML += `
             <div class="card-container">
                 <div class="img-wrapper"><img src="${prod.img}" alt="${prod.nome}"></div>
@@ -22,7 +25,7 @@ function renderizarProdutos(lista) {
                     <h3>${prod.nome}</h3>
                     <p>${prod.descricao}</p>
                     <h4>R$${prod.preco}</h4>
-                    <a href="https://wa.me/5569999999999?text=Quero o produto ${prod.nome}" class="btn-wpp">
+                    <a href="${linkWpp}" class="btn-wpp" target="_blank">
                         🟢 Pedir via WhatsApp
                     </a>
                 </div>
