@@ -11,7 +11,7 @@ const client = new Client({
       'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.3000.1012158737-alpha.html'
   },
   puppeteer: {
-    headless: true,
+    headless: false,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',

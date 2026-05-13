@@ -30,6 +30,7 @@
   "homepage": "https://github.com/bielbritob/HackatownWebTemplate#readme",
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "whatsapp-web.js": "^1.34.7"
   }
 }
