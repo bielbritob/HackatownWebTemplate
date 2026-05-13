@@ -165,7 +165,7 @@ body {
 
 .chat-head-inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 4px;
 }
 
@@ -176,7 +176,15 @@ body {
 
 .chat-title {
   font-weight: 600;
+
 }
+
+.chat-nome {
+  color: #e5e7eb;
+  flex-direction: row;
+}
+
+
 
 .chat-meta {
   font-size: 0.75rem;
@@ -293,3 +301,46 @@ body {
   color: var(--text-muted);
   font-size: 0.9rem;
 }
+
+/* --- Responsividade Mobile --- */
+@media (max-width: 768px) {
+  .app {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 1; /* Camada de baixo */
+    background: var(--bg-sidebar); /* Garante que tenha fundo sólido */
+    transition: opacity 0.3s ease;
+  }
+
+  .main {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 2; /* Camada de cima */
+    background: var(--bg); /* FUNDO SÓLIDO é essencial aqui */
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+
+  /* Quando o chat abrir: */
+  .app.chat-mobile-ativo .main {
+    transform: translateX(0);
+  }
+
+
+  .app.chat-mobile-ativo .sidebar {
+    opacity: 0; /* Esconde a lista totalmente para não vazar no fundo */
+    pointer-events: none; /* Desativa cliques na lista por baixo */
+  }
+}
+

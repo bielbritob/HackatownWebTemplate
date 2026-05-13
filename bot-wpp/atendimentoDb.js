@@ -18,15 +18,16 @@ async function getAtendimentoStatus(numero) {
   return rows[0] || { status: 'bot', produto: null, temperatura: 'frio' };
 }
 
-async function ensureAtendimentoRow(numero, produto = null) {
+async function ensureAtendimentoRow(numero, produto = null, nome = null) {
   const id = normalizeChatId(numero);
   await pool.execute(
-    `INSERT INTO atendimentos (numero, status, produto, temperatura)
-     VALUES (?, 'bot', ?, 'frio')
-     ON DUPLICATE KEY UPDATE
-       atualizado_em = CURRENT_TIMESTAMP,
-       produto = IF(VALUES(produto) IS NOT NULL AND VALUES(produto) != '', VALUES(produto), atendimentos.produto)`,
-    [id, produto]
+    `INSERT INTO atendimentos (numero, nome, status, produto, temperatura)
+     VALUES (?, ?, 'bot', ?, 'frio')
+       ON DUPLICATE KEY UPDATE
+                          atualizado_em = CURRENT_TIMESTAMP,
+                          nome = IF(VALUES(nome) IS NOT NULL AND VALUES(nome) != '', VALUES(nome), atendimentos.nome),
+                          produto = IF(VALUES(produto) IS NOT NULL AND VALUES(produto) != '', VALUES(produto), atendimentos.produto)`,
+    [id, nome, produto]
   );
 }
 
@@ -105,6 +106,7 @@ async function listarConversas() {
   const [rows] = await pool.query(`
     SELECT
       a.numero,
+      a.nome,
       a.status,
       a.produto,
       a.temperatura,

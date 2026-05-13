@@ -6,18 +6,11 @@ import { defineConfig } from 'vite';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const ASSET_MIME = {
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.png': 'image/png',
-  '.gif': 'image/gif',
-  '.webp': 'image/webp',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2',
-  '.woff': 'font/woff'
+  '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png',
+  '.gif': 'image/gif', '.webp': 'image/webp', '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon', '.woff2': 'font/woff2', '.woff': 'font/woff'
 };
 
-/** Serve pasta /assets na raiz do repo em http://dev…/assets/… (igual ao Live Server). */
 function serveRepoAssets() {
   const root = path.join(__dirname, 'assets');
   return {
@@ -46,19 +39,25 @@ export default defineConfig({
   appType: 'mpa',
   plugins: [serveRepoAssets()],
   server: {
+    host: '0.0.0.0', // Escuta em todas as interfaces
     port: 5173,
-    strictPort: false,
-    open: '/Faroni/Landing/index.html',
+    strictPort: true,
+    // Se 'all' falha, passamos um array com o caractere curinga
+    allowedHosts: ['.tunnelmole.net', '.holeo.site', 'localhost', '127.0.0.1'],
+    cors: true,
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:3000',
-        changeOrigin: true
+        changeOrigin: true,
+        secure: false,
+        ws: true
+      },
+      '/projeto_php': {
+        target: 'http://127.0.0.1:80',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/projeto_php/, '/projeto_01_hackatown')
       }
     }
-  },
-  preview: {
-    port: 4173,
-    open: '/Faroni/Landing/index.html'
   },
   build: {
     rollupOptions: {

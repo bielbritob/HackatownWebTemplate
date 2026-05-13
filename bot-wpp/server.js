@@ -42,12 +42,14 @@ function createApp() {
   app.get('/api/conversa/:numero', async (req, res) => {
     try {
       const numero = normalizeChatId(req.params.numero);
+      const nome = req.query.nome || 'Cliente'; //faz query para buscar nome, senao seta como "cliente"
+      //console.log(nome)
       const [mensagens, atendimento] = await Promise.all([
         listarMensagens(numero),
         getAtendimentoStatus(numero)
       ]);
       await marcarMensagensClienteLidas(numero);
-      res.json({ numero, atendimento, mensagens });
+      res.json({ numero, atendimento, mensagens, nome });
     } catch (e) {
       console.error(e);
       res.status(500).json({ error: String(e.message) });
@@ -84,12 +86,21 @@ function createApp() {
 
       // 5. Enviar via WhatsApp (Envio Direto para evitar erro de LID)
       try {
+        // Substituido
         const chatId = id.includes('@c.us') ? id : `${id}@c.us`;
 
-        // Enviamos direto pelo 'c' (client) em vez de buscar o objeto 'chat'
-        await c.sendMessage(chatId, String(texto).trim());
+      // Tenta pelo chat existente primeiro (evita LID)
+        const chats = await c.getChats();
+        const chatExistente = chats.find(ch => ch.id._serialized === chatId);
+
+        if (chatExistente) {
+          await chatExistente.sendMessage(String(texto).trim());
+        } else {
+          await c.sendMessage(chatId, String(texto).trim());
+        }
 
         res.json({ ok: true });
+
       } catch (sendError) {
         console.error("Erro no envio direto:", sendError);
         res.status(500).json({ error: "Erro técnico ao disparar mensagem. Tente reiniciar o bot." });

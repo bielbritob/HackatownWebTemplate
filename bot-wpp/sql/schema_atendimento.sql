@@ -1,23 +1,64 @@
--- Execute no MySQL (Beekeeper) antes de rodar o bot com o painel.
--- Ajuste o database se necessário: USE faroni_db;
+CREATE DATABASE IF NOT EXISTS 3A_Engenharia_db;
+USE 3A_Engenharia_db;
 
-CREATE TABLE IF NOT EXISTS mensagens (
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    numero      VARCHAR(64) NOT NULL,
-    de          ENUM('cliente', 'bot', 'atendente') NOT NULL,
-    texto       TEXT NOT NULL,
-    lida        BOOLEAN DEFAULT FALSE,
-    criado_em   DATETIME DEFAULT CURRENT_TIMESTAMP,
-    INDEX idx_mensagens_numero (numero),
-    INDEX idx_mensagens_criado (criado_em)
-);
+-- 1. Tabela de Produtos
+CREATE TABLE IF NOT EXISTS produtos (
+                                      id INT PRIMARY KEY AUTO_INCREMENT,
+                                      nome VARCHAR(255) NOT NULL,
+  preco DECIMAL(10,2),
+  descricao TEXT NOT NULL,
+  img VARCHAR(255) NOT NULL
+  );
 
-CREATE TABLE IF NOT EXISTS atendimentos (
-    id            INT AUTO_INCREMENT PRIMARY KEY,
-    numero        VARCHAR(64) NOT NULL,
-    status        ENUM('bot', 'aguardando', 'humano', 'resolvido') NOT NULL DEFAULT 'bot',
-    produto       VARCHAR(255) NULL,
-    temperatura   ENUM('frio', 'quente') NOT NULL DEFAULT 'frio',
-    atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_atendimentos_numero (numero)
-);
+-- 2. Tabela de Usuários (Login Admin)
+CREATE TABLE IF NOT EXISTS usuarios (
+                                      id INT PRIMARY KEY AUTO_INCREMENT,
+                                      email VARCHAR(255) NOT NULL,
+  senha VARCHAR(255) NOT NULL
+  );
+
+-- 3. Inserção de Dados Iniciais
+INSERT INTO usuarios (email, senha) VALUES ('admin', 'admin');
+
+INSERT INTO produtos (nome, preco, descricao, img) VALUES
+                                                     ('Caderno Tilibra', 35.90, 'Capa dura 10 matérias', 'https://m.media-amazon.com/images/I/41lBrKARimL._AC_SX522_.jpg'),
+                                                     ('Lapiseira Pilot', 12.99, 'Ponta 0.7mm', 'https://m.media-amazon.com/images/I/51PTTBp9d4L._AC_SX522_.jpg');
+
+-- 4. Motor do Chat (Atendimentos)
+CREATE TABLE IF NOT EXISTS `atendimentos` (
+                                            `id` INT NOT NULL AUTO_INCREMENT,
+                                            `numero` VARCHAR(64) NOT NULL,
+  `nome` VARCHAR(255) DEFAULT NULL,
+  `status` ENUM('bot', 'aguardando', 'humano', 'resolvido') NOT NULL DEFAULT 'bot',
+  `produto` VARCHAR(255) DEFAULT NULL,
+  `temperatura` ENUM('frio', 'quente') NOT NULL DEFAULT 'frio',
+  `atualizado_em` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_atendimentos_numero` (`numero`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 5. Controle de Etapas do Bot
+CREATE TABLE IF NOT EXISTS `bot_sessoes` (
+                                           `id` INT NOT NULL AUTO_INCREMENT,
+                                           `numero` VARCHAR(30) NOT NULL,
+  `produto` VARCHAR(255) DEFAULT NULL,
+  `etapa` VARCHAR(50) DEFAULT 'inicio',
+  `historico` JSON DEFAULT NULL,
+  `criado_em` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `atualizado_em` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `numero` (`numero`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 6. Histórico de Mensagens
+CREATE TABLE IF NOT EXISTS `mensagens` (
+                                         `id` INT NOT NULL AUTO_INCREMENT,
+                                         `numero` VARCHAR(64) NOT NULL,
+  `de` ENUM('cliente', 'bot', 'atendente') NOT NULL,
+  `texto` TEXT NOT NULL,
+  `lida` TINYINT(1) DEFAULT '0',
+  `criado_em` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_mensagens_numero` (`numero`),
+  KEY `idx_mensagens_criado` (`criado_em`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

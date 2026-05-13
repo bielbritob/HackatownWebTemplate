@@ -2,7 +2,7 @@
 // CONFIGURAÇÃO DA API
 // Altere para o caminho do seu PHP no XAMPP
 // ==========================================
-const API_URL = 'http://localhost/projeto_01_hackatown/api/admin_produtos.php';
+const API_URL = '/projeto_php/api/admin_produtos.php';
 
 // ==========================================
 // UTILITÁRIOS
@@ -68,7 +68,7 @@ function renderizarCards(produtos) {
                 <img
                     src="${prod.img}"
                     alt="${prod.nome}"
-      
+
                 >
             </div>
             <div class="card-info">

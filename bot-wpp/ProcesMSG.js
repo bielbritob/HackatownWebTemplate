@@ -11,6 +11,43 @@ const {
 
 const sessoes = new Map();
 
+// função fix LID, essa pega o numero real 5569********
+async function getNumeroReal(msg) {
+  try {
+    const contato = await msg.getContact();
+    const nome = contato.pushname || contato.name || null;
+
+    // tenta pegar número pelo id do contato que o WPP confirma
+    const idSerializer = contato.id._serialized; // pode ser LID ou número real
+    const idUser = contato.id.user; // só os dígitos, sem @c.us
+
+    // se idUser tem mais de 15 dígitos é LID, tenta _serialized do number
+    let numero;
+    if (idUser && idUser.length <= 15) {
+      numero = `${idUser}@c.us`; // número real
+    } else {
+      // LID — usa o client para resolver
+      const c = getWhatsAppClient();
+      const chats = await c.getChats();
+      const chat = chats.find(ch =>
+        ch.id._serialized === idSerializer ||
+        ch.id._serialized === normalizeChatId(msg.from)
+      );
+      if (chat) {
+        numero = chat.id._serialized;
+      } else {
+        numero = normalizeChatId(msg.from); // fallback
+      }
+    }
+
+    console.log('[getNumeroReal] nome:', nome, '| numero:', numero);
+    return { numero, nome };
+  } catch (e) {
+    console.error('[getNumeroReal] erro:', e.message);
+    return { numero: normalizeChatId(msg.from), nome: null };
+  }
+}
+
 function invalidateSessaoLocal(numero) {
   const id = normalizeChatId(numero);
   sessoes.delete(id);
@@ -45,7 +82,7 @@ async function getSessao(numero) {
 }
 
 async function replyBot(msg, sessao, texto) {
-  const id = normalizeChatId(msg.from);
+  const { numero: id } = await getNumeroReal(msg); // CORRIGIDO
   await salvarMensagem(id, 'bot', texto);
   sessao.historico.push({ de: 'bot', texto, hora: new Date().toISOString() });
   await persistBotSessao(id, sessao.produto, sessao.etapa, sessao.historico);
@@ -53,7 +90,7 @@ async function replyBot(msg, sessao, texto) {
 }
 
 async function avisarAtendente(msg, sessao) {
-  const id = normalizeChatId(msg.from);
+  const { numero: id, nome } = await getNumeroReal(msg);
   const resumo = sessao.historico
     .filter((h) => h && h.texto)
     .slice(-8)
@@ -179,31 +216,40 @@ async function processarMensagem(msg) {
   const texto = (msg.body || '').trim();
   if (!texto) return;
 
-  const id = normalizeChatId(msg.from);
+  // CORRIGIDO: pega número real e nome, evita LID
+  const { numero: id, nome } = await getNumeroReal(msg);
 
   await salvarMensagem(id, 'cliente', texto);
 
   const at = await getAtendimentoStatus(id);
-  if (at.status === 'humano' || at.status === 'aguardando') {
-    return;
-  }
+  if (at.status === 'humano' || at.status === 'aguardando') return;
 
   const sessao = await getSessao(id);
+
+  // Salva o nome na sessão se ainda não tem
+  if (nome && !sessao.nome) {
+    sessao.nome = nome;
+  }
+
   sessao.historico.push({ de: 'cliente', texto, hora: new Date().toISOString() });
 
   if (sessao.etapa === 'inicio') {
-    const prodMatch = texto.match(/produto:\s*\*?(.+?)\*?\s*\(/i);
+    // Regex ajustada: pega tudo depois de "produto:" até o "("
+    const prodMatch = texto.match(/produto:\s*(.+?)\s*\(/i);
     if (prodMatch) {
       sessao.produto = prodMatch[1].trim();
+      // Remove asteriscos caso o usuário tenha enviado com negrito
+      sessao.produto = sessao.produto.replace(/\*/g, '');
     }
+
     const priceMatch = texto.match(/\(\s*(R\$[\d.,\s]+)\s*\)/i);
-    if (priceMatch) {
-      sessao.preco = priceMatch[1].trim();
-    }
-    await ensureAtendimentoRow(id, sessao.produto);
-    if (sessao.produto) {
-      await atualizarAtendimento(id, { produto: sessao.produto });
-    }
+    if (priceMatch) sessao.preco = priceMatch[1].trim();
+
+    console.log(`[Bot] Produto Identificado: ${sessao.produto} | Preço: ${sessao.preco}`);
+
+    await ensureAtendimentoRow(id, sessao.produto, nome);
+    if (sessao.produto) await atualizarAtendimento(id, { produto: sessao.produto });
+
     await enviarBoasVindas(msg, sessao);
     sessao.etapa = 'menu';
     await persistBotSessao(id, sessao.produto, sessao.etapa, sessao.historico);

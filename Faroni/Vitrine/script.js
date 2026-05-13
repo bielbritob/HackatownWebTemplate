@@ -39,8 +39,8 @@ async function carregarDados() {
   container.innerHTML = "<p style='text-align: center; min-height: 500px;'>Carregando produtos...</p>";
 
   try {
-    // Altere a URL para o caminho do seu arquivo PHP no XAMPP
-    const response = await fetch('http://localhost/projeto_01_hackatown/api/get_produtos.php');
+    // Altere a URL para o caminho do seu arquivo PHP no XAMPP //FETCH ADAPTADO PARA TMOLE!!!!
+    const response = await fetch('/projeto_php/api/get_produtos.php');
 
     if (!response.ok) throw new Error('Falha ao conectar com o servidor');
 

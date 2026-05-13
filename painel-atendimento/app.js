@@ -47,10 +47,12 @@
         const temp = c.temperatura === 'quente' ? 'badge-quente' : 'badge-frio';
         const tempLabel = c.temperatura === 'quente' ? 'Quente' : 'Frio';
         const numDisplay = String(c.numero).replace('@c.us', '');
+        const nomeDisplay = String(c.nome);
         return `
         <div class="item-conversa${ativo}" data-numero="${encodeURIComponent(c.numero)}">
           <div class="item-top">
             <span class="item-numero">${escapeHtml(numDisplay)}</span>
+            <span class="item-name">~${escapeHtml(nomeDisplay)}</span>
             <span class="item-time">${fmtTime(c.ultima_mensagem_em)}</span>
           </div>
           <div class="item-produto">${escapeHtml(c.produto || '— sem produto —')}</div>
@@ -66,6 +68,10 @@
     elLista.querySelectorAll('.item-conversa').forEach((node) => {
       node.addEventListener('click', () => {
         selectedNumero = decodeURIComponent(node.getAttribute('data-numero'));
+
+        // Abre o chat no mobile
+        document.querySelector('.app').classList.add('chat-mobile-ativo');
+
         renderLista(lastRows);
         loadConversa();
       });
@@ -83,15 +89,32 @@
   function renderMensagens(payload) {
     const { atendimento, mensagens } = payload;
     const numDisplay = String(payload.numero).replace('@c.us', '');
+    const nomeDisplay = String(payload.nome);
     elChatHead.innerHTML = `
-      <div class="chat-head-inner">
-        <div class="chat-title">${escapeHtml(numDisplay)}</div>
+    <div class="chat-head-inner" style="align-items: center; display: flex; gap: 10px;">
+      <button id="btn-voltar" class="btn btn-ghost" style="padding: 5px 10px; border: none; font-size: 1.2rem; display: none;"> ← </button>
+
+      <div style="flex: 1;">
+        <div style="display: flex; gap: 8px; align-items: baseline;">
+          <div class="chat-title">${escapeHtml(numDisplay)}</div>
+          <div class="chat-nome">~${escapeHtml(nomeDisplay)}</div>
+        </div>
         <div class="chat-meta">
-          ${escapeHtml(atendimento.produto || 'Produto não informado')}
-          · ${labelStatus(atendimento.status)}
+          ${escapeHtml(atendimento.produto || 'Produto não informado')} · ${labelStatus(atendimento.status)}
           · ${atendimento.temperatura === 'quente' ? '🔥 Quente' : '❄️ Frio'}
         </div>
-      </div>`;
+      </div>
+    </div>`;
+
+    // Lógica do botão voltar (executa apenas se estiver no mobile)
+    const btnVoltar = document.getElementById('btn-voltar');
+    if (window.innerWidth <= 768) {
+      btnVoltar.style.display = 'block';
+      btnVoltar.onclick = () => {
+        document.querySelector('.app').classList.remove('chat-mobile-ativo');
+        selectedNumero = null; // Opcional: limpa seleção ao voltar
+      };
+    }
 
     if (!mensagens || !mensagens.length) {
       elMensagens.innerHTML = '<div class="empty-chat">Sem mensagens nesta conversa.</div>';
@@ -124,8 +147,17 @@
 
   async function loadConversa() {
     if (!selectedNumero) return;
-    const enc = encodeURIComponent(selectedNumero);
-    const data = await fetchJson('/api/conversa/' + enc);
+
+    // 1. Localiza o objeto da conversa na lista carregada para pegar o nome
+    const conversaAtual = lastRows.find(c => c.numero === selectedNumero);
+    const nomeCliente = conversaAtual ? conversaAtual.nome : 'Cliente';
+
+    const encNumero = encodeURIComponent(selectedNumero);
+    const encNome = encodeURIComponent(nomeCliente);
+
+    // 2. Monta a URL enviando o nome como Query Parameter
+    const data = await fetchJson(`/api/conversa/${encNumero}?nome=${encNome}`);
+
     renderMensagens(data);
   }
 

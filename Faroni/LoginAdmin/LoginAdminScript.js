@@ -12,8 +12,8 @@ async function tryLogin() {
     }
 
     try {
-        // Faz a requisição para o seu servidor local XAMPP
-        const response = await fetch('http://localhost/projeto_01_hackatown/api/login.php', {
+        // Faz a requisição para o seu servidor local XAMPP //ADAPTADO PRA TMOLE /projeto_php/... aponta para htdocs xampp
+        const response = await fetch('/projeto_php/api/login.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: usuario, senha: senha })
