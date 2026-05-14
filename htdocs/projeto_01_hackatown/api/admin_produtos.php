@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') { exit; }
 $host = "127.0.0.1";
 $user = "root";
 $pass = "k2g9ekk6"; // Senha do seu MySQL Server 9.7
-$dbname = "faroni_db";
+$dbname = "3a_engenharia_db";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 if ($conn->connect_error) { die(json_encode(["success" => false, "message" => "Erro na conexão"])); }

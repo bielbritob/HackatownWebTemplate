@@ -10,7 +10,7 @@ header('Content-Type: application/json');
 $host = "127.0.0.1";
 $user = "root";
 $pass = "k2g9ekk6"; 
-$dbname = "faroni_db";
+$dbname = "3a_engenharia_db"; // Db da 3A
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
@@ -32,7 +32,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     echo json_encode(["success" => true]);
 } else {
-    echo json_encode(["success" => false, "message" => "E-mail ou senha incorretos."]);
+    echo json_encode(["success" => false, "message" => "Usuario ou senha incorretos."]);
 }
 
 $stmt->close();
