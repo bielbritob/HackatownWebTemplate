@@ -1,6 +1,22 @@
-# Hackatown Web Template
+# `Hackatown Web Template`
 
-Monorepositório para hackathon: **vitrines e admin em HTML/CSS/JS**, **tema por marca**, **API PHP** (exemplo em `htdocs/`), **bot WhatsApp** (`bot-wpp`) e **painel de atendimento**.
+### Repositorio usado em um hackathon que o objetivo era fazer um sistema e-commerce :
+
+#### `conteudo do template:`
+
+* **LandingPage**(sobre a empresa)
+* **Vitrines**(produtos da empresa)
+* **Admin em HTML/CSS/JS**(manage db, subdominio)
+* **tema css responsivo global(por marca)**
+* **API PHP** (exemplo em `htdocs/`)
+* **bot WhatsApp** (`bot-wpp`, feito com wweb.js) 
+* **painel de atendimento**(CRM)
+
+### OBS: 
+Projeto desenvolvido de maneira a expor o localhost, expor oq está rodando em sua maquina através do tunnelmole('**TmoleQRcode.js**'). Apenas para testes. Sinta-se livre para adaptar.
+
+## DEMO:
+
 
 ## Estrutura
 
@@ -20,7 +36,20 @@ Monorepositório para hackathon: **vitrines e admin em HTML/CSS/JS**, **tema por
 
 - **Node.js** 18+ (recomendado LTS)
 - **npm** (vem com o Node)
-- Para PHP/MySQL: **XAMPP** (ou similar) + **MySQL** + **Beekeeper** (opcional), conforme o teu fluxo
+- Para PHP/MySQL: **XAMPP** (ou similar) + **MySQL 9.7 LTS** + **Beekeeper** (opcional) + **schema_db especifica**(./bot-wpp/sql/schema_atendimento.sql)
+
+## packages usadas:
+  ### `botwpp:`
+- whatsapp-web.js
+- qrcode-terminal
+- cors
+- express
+- mysql2
+### `site ecommerce:`
+- cors
+- express
+### `TmoleQRcode(expoe localhost na net e gera qr code com link)`
+- qrcode-terminals
 
 ## Instalação (clone em qualquer máquina)
 
@@ -37,6 +66,13 @@ cd bot-wpp && npm install && cd ..
 ```
 
 ## Forma recomendada de ver o site: **Vite** (`npm run dev`)
+### Forma recomendada de fazer tudo funcionar com o bot:
+1.   rodar no root do projeto:
+     `cd .\bot-wpp\ && node index.js`
+2.   apos o bot dizer que tá on em outro terminal rode:
+    `npm run dev`
+3. e então rode o `TmoleQRcode.js`
+
 
 Funciona igual no WebStorm, VS Code ou terminal. O Vite:
 
@@ -48,7 +84,7 @@ Funciona igual no WebStorm, VS Code ou terminal. O Vite:
 npm run dev
 ```
 
-Abre por defeito a landing Faroni. Outras entradas úteis:
+Abria por padrao a landing Faroni. Outros links úteis:
 
 - Landing Faroni: `http://localhost:5173/Faroni/Landing/index.html`
 - Vitrine Faroni: `http://localhost:5173/Faroni/Vitrine/index.html`
@@ -98,10 +134,6 @@ Detalhes do fluxo bot ↔ painel ↔ MySQL mantêm-se na pasta `bot-wpp` e no c�
 ## API PHP (XAMPP)
 
 Coloca a pasta `htdocs/projeto_01_hackatown` (ou o projeto PHP completo) no document root do Apache e configura a base de dados que o PHP e o bot usarem. O front em HTML pode apontar para URLs absolutas da API em desenvolvimento.
-
-## Firebase / chaves
-
-Se no futuro adicionares `firebase.js` ou outras chaves, **não** faças commit de segredos: usa variáveis de ambiente ou ficheiros locais listados no `.gitignore`.
 
 ## Licença
 
