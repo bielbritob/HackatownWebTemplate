@@ -16,8 +16,7 @@
 Projeto desenvolvido de maneira a expor o localhost, expor oq está rodando em sua maquina através do tunnelmole('**TmoleQRcode.js**'). Apenas para testes. Sinta-se livre para adaptar.
 
 ## DEMO:
-
-
+  https://youtu.be/15k0fYMb2mc
 ## Estrutura
 
 | Pasta | Conteúdo |
@@ -69,7 +68,7 @@ cd bot-wpp && npm install && cd ..
 ### Forma recomendada de fazer tudo funcionar com o bot:
 1.   rodar no root do projeto:
      `cd .\bot-wpp\ && node index.js`
-2.   apos o bot dizer que tá on em outro terminal rode:
+2.   apos o bot dizer que tá on, em outro terminal rode:
     `npm run dev`
 3. e então rode o `TmoleQRcode.js`
 
@@ -78,7 +77,7 @@ Funciona igual no WebStorm, VS Code ou terminal. O Vite:
 
 - Serve o projeto na raiz (caminhos `../../assets/...` e `../theme.css` funcionam)
 - Expõe a pasta `assets/` em `http://localhost:5173/assets/...`
-- Faz **proxy** de `/api/*` para `http://127.0.0.1:3000` (útil para o painel falar com o bot enquanto desenvolves o front)
+- Faz **proxy** de `/api/*` para `http://127.0.0.1:3000` (útil para o painel falar com o bot
 
 ```bash
 npm run dev
@@ -109,7 +108,7 @@ Saída em `dist/`. Para pré-visualizar o build: `npm run preview`.
 
 Com `liveServer.settings.root` na raiz do workspace (já definido em `.vscode/settings.json`), os URLs ficam alinhados com os caminhos relativos (`/Faroni/...`, `/assets/...`).
 
-**Nota:** Live Server **não** faz proxy da API do bot. Para o painel com `/api`, usa **Vite** com o bot a correr, ou abre o painel em `http://localhost:3000/painel-atendimento/index.html` quando só o bot estiver ativo.
+**Nota:** Live Server **não** faz proxy da API do bot. Para o painel com `/api`, usa **Vite** com o bot, ou abre o painel em `http://localhost:3000/painel-atendimento/index.html` quando só o bot estiver ativo.
 
 ## JetBrains **WebStorm**
 

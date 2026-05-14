@@ -34,7 +34,20 @@ client.on('ready', () => {
 });
 
 client.on('message', async (msg) => {
+  // ignora grupo, != de msg txt e se nao começar com 'olá! Vim pelo...
   if (msg.from.endsWith('@g.us')) return;
+  if (msg.type !== 'chat') return;
+
+  const frases = [
+    'Olá! Vim pelo site e me interessei pelo produto:',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+  ];
+  if (!frases.some(f => msg.body.startsWith(f))) return;
   try {
     await processarMensagem(msg);
   } catch (e) {

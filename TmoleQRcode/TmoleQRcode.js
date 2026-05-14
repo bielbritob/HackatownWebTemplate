@@ -15,7 +15,7 @@ tmole.stdout.on('data', (data) => {
   if (match) {
     // Limpamos a URL de qualquer resquício de texto do terminal
     const baseUrl = match[0].trim();
-    const fullUrl = `${baseUrl}/Faroni/landing/index.html`;
+    const fullUrl = `${baseUrl}/3aengenharia/landing/index.html`; // 3a eng
 
     console.log("\n" + "=".repeat(40));
     console.log("✅ LINK PRONTO PARA CELULAR!");

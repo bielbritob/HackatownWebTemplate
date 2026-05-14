@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de atendimento | WhatsApp</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <header class="sidebar-head">
+        <h1>Atendimento</h1>
+        <p class="sub">Conversas ativas</p>
+      </header>
+      <div id="lista-conversas" class="lista"></div>
+    </aside>
+    <main class="main">
+      <header class="chat-head" id="chat-head">
+        <div class="chat-head-placeholder">
+          <span>Selecione uma conversa</span>
+        </div>
+      </header>
+      <div id="mensagens" class="mensagens"></div>
+      <footer class="composer" id="composer" hidden>
+        <div class="composer-actions">
+          <button type="button" class="btn btn-ghost" id="btn-assumir">Assumir atendimento</button>
+          <button type="button" class="btn btn-ghost danger" id="btn-resolver">Marcar como resolvido</button>
+        </div>
+        <div class="composer-row">
+          <textarea id="input-msg" rows="1" placeholder="Digite uma mensagem…"></textarea>
+          <button type="button" class="btn btn-send" id="btn-enviar">Enviar</button>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
