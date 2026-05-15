@@ -60,11 +60,13 @@ body {
     object-fit: cover;
 }
 
-.logo-box h1 {
+/* 3a ENGENHARIA TXT */
+.logo-box a {
     font-size: 1.1rem;
     font-weight: 700;
     text-transform: uppercase;
     color: var(--primary);
+    text-decoration: none;
 }
 
 .admin-badge {
@@ -164,6 +166,38 @@ body {
     box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
 }
 
+.input-currency-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background: var(--background);
+    overflow: hidden;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input-currency-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
+}
+
+.currency-prefix {
+    background: var(--background-page);
+    color: var(--text-label);
+    padding: 11px 14px;
+    font-weight: 700;
+    font-size: 14px;
+    border-right: 1px solid var(--input-border);
+    user-select: none;
+}
+
+.input-currency-wrapper input {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0;
+    flex: 1;
+}
+
 .form-full {
     grid-column: 1 / -1;
 }
@@ -185,6 +219,25 @@ body {
 
 .btn-add:hover {
     background: var(--primary-hover);
+}
+
+.btn-danger-modal {
+    background: var(--danger, #ef4444);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-danger-modal:hover {
+    background: #dc2626;
 }
 
 /* ==========================================
@@ -368,4 +421,57 @@ body {
 .notif.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* ==========================================
+   MODAL DE EDIÇÃO
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    margin-bottom: 0; /* Override do form-card padrão */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: var(--text-subtle, #64748b);
+    border: 1px solid var(--border);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background: var(--background-page);
+    color: var(--text-heading, #1e293b);
 }

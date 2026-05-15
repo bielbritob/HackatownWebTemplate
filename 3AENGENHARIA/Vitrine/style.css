@@ -33,6 +33,7 @@ header {
     color: var(--primary);
 }
 
+/*MEDIA 3AENGENHARIA TXT*/
 @media (max-width: 768px) {
     .logo-box {
         gap: 5px;
@@ -41,7 +42,15 @@ header {
     .logo-box h1 { display: none; }
 }
 
-.logo-box h1 { font-size: 1.2rem; font-weight: bold; text-transform: uppercase; }
+
+/* 3a ENGENHARIA TXT */
+.logo-box a {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary);
+  text-decoration: none;
+}
 
 .img-container {
     width: 65px;
@@ -171,10 +180,10 @@ header {
 /*nome produto*/
 .card-body h3 {
   font-size: 1.25rem;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: var(--text-body);
   height: 40px;
-  overflow: hidden; }
+  overflow: visible; }
 
 /*desc produto*/
 .card-body p {

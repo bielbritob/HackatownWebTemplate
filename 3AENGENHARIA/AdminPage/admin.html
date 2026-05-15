@@ -12,9 +12,10 @@
 <header class="adm-header">
     <div class="logo-box">
         <div class="logo-circle">
-            <img src="../../assets/3AengICO.jpg" alt="Logo Faroni" onerror="this.style.display='none'">
+
+            <img href="/3aengenharia/landing/index.html" src="../../assets/3AengICO.jpg" alt="Logo Faroni" onerror="this.style.display='none'">
         </div>
-        <h1>3A Engenharia</h1>
+      <a href="/3aengenharia/landing/index.html">3A ENGENHARIA</a>
     </div>
     <span class="admin-badge">PAINEL ADMIN</span>
     <div class="loc-box">Porto Velho, RO</div>
@@ -35,7 +36,10 @@
             </div>
             <div class="form-group">
                 <label for="preco">Preço</label>
-                <input type="text" id="preco" placeholder="Ex: R$ 5,99">
+                <div class="input-currency-wrapper">
+                    <span class="currency-prefix">R$</span>
+                    <input type="text" id="preco" placeholder="0,00">
+                </div>
             </div>
             <div class="form-group form-full">
                 <label for="desc">Descrição</label>
@@ -66,6 +70,59 @@
 
 <!-- Notificação Toast -->
 <div class="notif" id="notif"></div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal-overlay hidden" id="modal-delete">
+    <div class="form-card modal-card" style="max-width: 400px; text-align: center;">
+        <h2>
+            <span class="icon-title">⚠️</span>
+            Excluir produto
+        </h2>
+        <p style="color: var(--text-subtle, #64748b); margin-bottom: 24px; font-size: 14px;">
+            Tem certeza que deseja excluir este produto? Esta ação não pode ser desfeita.
+        </p>
+        <div class="modal-actions" style="justify-content: center;">
+            <button class="btn-cancel" id="btn-cancel-delete">Cancelar</button>
+            <button class="btn-danger-modal" id="btn-confirm-delete">Excluir Produto</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Edição -->
+<div class="modal-overlay hidden" id="modal-editar">
+    <div class="form-card modal-card">
+        <h2>
+            <span class="icon-title">✏️</span>
+            Editar produto
+        </h2>
+        <input type="hidden" id="edit-id">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="edit-nome">Nome do produto</label>
+                <input type="text" id="edit-nome">
+            </div>
+            <div class="form-group">
+                <label for="edit-preco">Preço</label>
+                <div class="input-currency-wrapper">
+                    <span class="currency-prefix">R$</span>
+                    <input type="text" id="edit-preco" placeholder="0,00">
+                </div>
+            </div>
+            <div class="form-group form-full">
+                <label for="edit-desc">Descrição</label>
+                <input type="text" id="edit-desc">
+            </div>
+            <div class="form-group form-full">
+                <label for="edit-img">URL da imagem</label>
+                <input type="text" id="edit-img">
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="btn-cancel-edit">Cancelar</button>
+            <button class="btn-add" id="btn-save-edit">Salvar Alterações</button>
+        </div>
+    </div>
+</div>
 
 <!-- Arquivo de validação de sessão do Firebase -->
 <script type="module" src="admin-script.js"></script>

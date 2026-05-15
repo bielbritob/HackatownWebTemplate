@@ -3,33 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel de atendimento | WhatsApp</title>
+  <title>CRM | 3A Engenharia</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Modal de Login -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-circle">3A</div>
+        <h2>Painel de Atendimento</h2>
+      </div>
+      <p>Identifique-se para iniciar os atendimentos</p>
+      <input type="text" id="atendente-nome" placeholder="Seu nome (ex: Gabriel)" />
+      <button class="btn btn-primary" id="btn-entrar">Entrar no Painel</button>
+    </div>
+  </div>
+
+
+  <!-- Header Global -->
+  <header class="global-header">
+    <div class="logo-box">
+      <div class="logo-circle">
+        <img src="../../assets/3AengICO.jpg" alt="Logo">
+      </div>
+      <h1>CRM 3A Engenharia</h1>
+    </div>
+    <div class="user-info">
+      <span class="user-badge">Atendente</span>
+      <strong id="display-nome">...</strong>
+    </div>
+  </header>
+
+
   <div class="app">
     <aside class="sidebar">
       <header class="sidebar-head">
-        <h1>Atendimento</h1>
-        <p class="sub">Conversas ativas</p>
+        <h2>Conversas Ativas</h2>
+        <div class="filters">
+          <span class="filter-badge active">Todas</span>
+          <span class="filter-badge">🔥 Quentes</span>
+        </div>
       </header>
       <div id="lista-conversas" class="lista"></div>
     </aside>
     <main class="main">
       <header class="chat-head" id="chat-head">
         <div class="chat-head-placeholder">
-          <span>Selecione uma conversa</span>
+          <div class="placeholder-icon">💬</div>
+          <span>Selecione uma conversa na lista para começar</span>
         </div>
       </header>
       <div id="mensagens" class="mensagens"></div>
+      <div id="new-messages-indicator" class="new-messages-indicator hidden">⬇ Novas mensagens</div>
       <footer class="composer" id="composer" hidden>
         <div class="composer-actions">
-          <button type="button" class="btn btn-ghost" id="btn-assumir">Assumir atendimento</button>
-          <button type="button" class="btn btn-ghost danger" id="btn-resolver">Marcar como resolvido</button>
+          <button type="button" class="btn btn-ghost" id="btn-assumir">
+            <span class="icon">🙋</span> Assumir atendimento
+          </button>
+          <button type="button" class="btn btn-ghost danger" id="btn-resolver">
+            <span class="icon">✅</span> Marcar como resolvido
+          </button>
         </div>
         <div class="composer-row">
-          <textarea id="input-msg" rows="1" placeholder="Digite uma mensagem…"></textarea>
-          <button type="button" class="btn btn-send" id="btn-enviar">Enviar</button>
+          <textarea id="input-msg" rows="1" placeholder="Digite uma mensagem... (Pressione Enter para enviar)"></textarea>
+          <button type="button" class="btn btn-send" id="btn-enviar">Enviar 🚀</button>
         </div>
       </footer>
     </main>

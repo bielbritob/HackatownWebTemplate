@@ -21,7 +21,7 @@ function createApp() {
   app.use(cors({ origin: true }));
   app.use(express.json());
 
-  const painelDir = path.join(__dirname, '..', 'painel-atendimento');
+  const painelDir = path.join(__dirname, '..', '3AENGENHARIA', 'painel-atendimento');
   app.use('/painel-atendimento', express.static(painelDir));
 
   app.get('/api/health', (req, res) => {

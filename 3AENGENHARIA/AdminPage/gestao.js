@@ -91,14 +91,24 @@ function renderizarCards(produtos) {
 // ==========================================
 // 3. ADICIONAR PRODUTO
 // ==========================================
+function formatarPreco(precoStr) {
+    if (!precoStr) return null;
+    let p = String(precoStr).replace(/R\$/gi, '').replace(/\s/g, '').replace(',', '.');
+    let floatVal = parseFloat(p);
+    if (isNaN(floatVal)) return null;
+    return floatVal.toFixed(2);
+}
+
 async function adicionarProduto() {
     const nome  = document.getElementById('nome').value.trim();
-    const preco = document.getElementById('preco').value.trim();
+    let preco = document.getElementById('preco').value.trim();
     const desc  = document.getElementById('desc').value.trim();
     const img   = document.getElementById('img').value.trim();
 
-    if (!nome || !preco) {
-        mostrarNotif('⚠️ Nome e preço são obrigatórios!');
+    preco = formatarPreco(preco);
+
+    if (!nome || preco === null) {
+        mostrarNotif('⚠️ Nome e preço válido (ex: 20.99) são obrigatórios!');
         return;
     }
 
@@ -122,7 +132,7 @@ async function adicionarProduto() {
             limparForm();
             listarProdutos();
         } else {
-            mostrarNotif('❌ Erro ao adicionar produto.');
+            mostrarNotif('❌ Erro: ' + (result.error || result.message || 'Falha ao adicionar.'));
         }
     } catch (error) {
         console.error('Erro ao adicionar:', error);
@@ -131,40 +141,82 @@ async function adicionarProduto() {
 }
 
 // ==========================================
-// 4. DELETAR PRODUTO
+// 4. DELETAR PRODUTO (VIA MODAL)
 // ==========================================
-window.deletarProduto = async (id) => {
-    if (!confirm('Certeza que quer excluir este produto?')) return;
+let deleteTargetId = null;
+const modalDelete = document.getElementById('modal-delete');
+const btnCancelDelete = document.getElementById('btn-cancel-delete');
+const btnConfirmDelete = document.getElementById('btn-confirm-delete');
+
+window.deletarProduto = (id) => {
+    deleteTargetId = id;
+    modalDelete.classList.remove('hidden');
+};
+
+btnCancelDelete.addEventListener('click', () => {
+    modalDelete.classList.add('hidden');
+    deleteTargetId = null;
+});
+
+btnConfirmDelete.addEventListener('click', async () => {
+    if (!deleteTargetId) return;
 
     try {
         await fetch(API_URL, {
             method: 'POST',
-            body: JSON.stringify({ action: 'deletar', id })
+            body: JSON.stringify({ action: 'deletar', id: deleteTargetId })
         });
         mostrarNotif('🗑️ Produto removido.');
+        modalDelete.classList.add('hidden');
         listarProdutos();
     } catch (error) {
         console.error('Erro ao deletar:', error);
         mostrarNotif('❌ Erro ao remover produto.');
     }
-};
+});
 
 // ==========================================
-// 5. EDITAR PRODUTO
+// 5. EDITAR PRODUTO (VIA MODAL)
 // ==========================================
-window.prepararEdicao = async (prod) => {
-    const novoNome  = prompt('Novo nome:', prod.nome)        || prod.nome;
-    const novoPreco = prompt('Novo preço:', prod.preco)      || prod.preco;
-    const novaDesc  = prompt('Nova descrição:', prod.descricao) || prod.descricao;
-    const novaImg   = prompt('Nova URL da imagem:', prod.img) || prod.img;
+const modalEditar = document.getElementById('modal-editar');
+const btnCancelEdit = document.getElementById('btn-cancel-edit');
+const btnSaveEdit = document.getElementById('btn-save-edit');
+
+window.prepararEdicao = (prod) => {
+    document.getElementById('edit-id').value = prod.id;
+    document.getElementById('edit-nome').value = prod.nome;
+    document.getElementById('edit-preco').value = prod.preco;
+    document.getElementById('edit-desc').value = prod.descricao || '';
+    document.getElementById('edit-img').value = prod.img || '';
+
+    modalEditar.classList.remove('hidden');
+};
+
+btnCancelEdit.addEventListener('click', () => {
+    modalEditar.classList.add('hidden');
+});
+
+btnSaveEdit.addEventListener('click', async () => {
+    const id = document.getElementById('edit-id').value;
+    const nome = document.getElementById('edit-nome').value.trim();
+    let preco = document.getElementById('edit-preco').value.trim();
+    const desc = document.getElementById('edit-desc').value.trim();
+    const img = document.getElementById('edit-img').value.trim();
+
+    preco = formatarPreco(preco);
+
+    if (!nome || preco === null) {
+        mostrarNotif('⚠️ Nome e preço válido (ex: 20.99) são obrigatórios!');
+        return;
+    }
 
     const dadosEdicao = {
         action: 'editar',
-        id:     prod.id,
-        nome:   novoNome,
-        preco:  novoPreco,
-        desc:   novaDesc,
-        img:    novaImg
+        id: id,
+        nome: nome,
+        preco: preco,
+        desc: desc,
+        img: img
     };
 
     try {
@@ -176,20 +228,31 @@ window.prepararEdicao = async (prod) => {
 
         if (result.success) {
             mostrarNotif('✏️ Produto atualizado!');
+            modalEditar.classList.add('hidden');
             listarProdutos();
         } else {
-            mostrarNotif('❌ Erro ao atualizar produto.');
+            mostrarNotif('❌ Erro: ' + (result.error || result.message || 'Falha ao atualizar.'));
         }
     } catch (error) {
         console.error('Erro ao editar:', error);
         mostrarNotif('❌ Erro de conexão com o servidor.');
     }
-};
+});
 
 // ==========================================
-// EVENT LISTENERS
+// EVENT LISTENERS E MÁSCARAS
 // ==========================================
 document.getElementById('btn-adicionar').addEventListener('click', adicionarProduto);
+
+function maskCurrency(e) {
+    let val = e.target.value;
+    // Permite apenas números, ponto e vírgula
+    val = val.replace(/[^0-9.,]/g, '');
+    e.target.value = val;
+}
+
+document.getElementById('preco').addEventListener('input', maskCurrency);
+document.getElementById('edit-preco').addEventListener('input', maskCurrency);
 
 // ==========================================
 // INICIALIZAÇÃO

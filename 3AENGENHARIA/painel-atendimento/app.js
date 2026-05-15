@@ -4,6 +4,10 @@
   let selectedNumero = null;
   let pollTimer = null;
   let lastRows = [];
+  let atendenteNome = localStorage.getItem('atendenteNome') || '';
+  let activeFilter = 'todas';
+  let lastRenderedNumero = null;
+  let lastMessagesCount = 0;
 
   const elLista = document.getElementById('lista-conversas');
   const elChatHead = document.getElementById('chat-head');
@@ -13,6 +17,66 @@
   const btnEnviar = document.getElementById('btn-enviar');
   const btnAssumir = document.getElementById('btn-assumir');
   const btnResolver = document.getElementById('btn-resolver');
+  const elIndicator = document.getElementById('new-messages-indicator');
+
+  elIndicator.addEventListener('click', () => {
+    elMensagens.scrollTop = elMensagens.scrollHeight;
+    elIndicator.classList.add('hidden');
+  });
+
+  elMensagens.addEventListener('scroll', () => {
+    const isNearBottom = elMensagens.scrollHeight - elMensagens.scrollTop <= elMensagens.clientHeight + 50;
+    if (isNearBottom) {
+      elIndicator.classList.add('hidden');
+    }
+  });
+
+  // Elementos do Login
+  const loginOverlay = document.getElementById('login-overlay');
+  const inputAtendente = document.getElementById('atendente-nome');
+  const btnEntrar = document.getElementById('btn-entrar');
+  const displayNome = document.getElementById('display-nome');
+
+  function initAuth() {
+    if (atendenteNome) {
+      loginOverlay.classList.add('hidden');
+      displayNome.textContent = atendenteNome;
+    } else {
+      loginOverlay.classList.remove('hidden');
+    }
+
+    btnEntrar.addEventListener('click', () => {
+      const val = inputAtendente.value.trim();
+      if (val) {
+        atendenteNome = val;
+        localStorage.setItem('atendenteNome', val);
+        loginOverlay.classList.add('hidden');
+        displayNome.textContent = val;
+      } else {
+        alert('Por favor, informe seu nome.');
+      }
+    });
+
+    inputAtendente.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') btnEntrar.click();
+    });
+  }
+
+  initAuth();
+
+  function initFilters() {
+    const badges = document.querySelectorAll('.filter-badge');
+    badges.forEach(b => {
+      b.addEventListener('click', (e) => {
+        badges.forEach(badge => badge.classList.remove('active'));
+        e.currentTarget.classList.add('active');
+        activeFilter = e.currentTarget.textContent.toLowerCase().includes('quentes') ? 'quentes' : 'todas';
+        renderLista(lastRows);
+      });
+    });
+  }
+  
+  initFilters();
 
   function fmtTime(iso) {
     if (!iso) return '';
@@ -21,7 +85,7 @@
   }
 
   function labelStatus(s) {
-    const map = { bot: 'Bot', aguardando: 'Aguardando', humano: 'Humano', resolvido: 'Resolvido' };
+    const map = { bot: '🤖 Bot', aguardando: '⏳ Aguardando', humano: '👤 Humano', resolvido: '✅ Resolvido' };
     return map[s] || s;
   }
 
@@ -36,26 +100,28 @@
   }
 
   function renderLista(rows) {
-    if (!rows || !rows.length) {
-      elLista.innerHTML = '<div class="empty-lista">Nenhuma conversa ainda.</div>';
+    const filteredRows = (rows || []).filter(c => activeFilter === 'todas' || (activeFilter === 'quentes' && c.temperatura === 'quente'));
+
+    if (!filteredRows.length) {
+      elLista.innerHTML = '<div class="empty-lista">Nenhuma conversa encontrada.</div>';
       return;
     }
-    elLista.innerHTML = rows
+    elLista.innerHTML = filteredRows
       .map((c) => {
         const ativo = c.numero === selectedNumero ? ' ativo' : '';
         const naoLidas = Number(c.nao_lidas) > 0 ? `<span class="badge badge-novas">${c.nao_lidas}</span>` : '';
         const temp = c.temperatura === 'quente' ? 'badge-quente' : 'badge-frio';
-        const tempLabel = c.temperatura === 'quente' ? 'Quente' : 'Frio';
+        const tempLabel = c.temperatura === 'quente' ? '🔥 Quente' : '❄️ Frio';
         const numDisplay = String(c.numero).replace('@c.us', '');
         const nomeDisplay = String(c.nome);
         return `
         <div class="item-conversa${ativo}" data-numero="${encodeURIComponent(c.numero)}">
           <div class="item-top">
             <span class="item-numero">${escapeHtml(numDisplay)}</span>
-            <span class="item-name">~${escapeHtml(nomeDisplay)}</span>
             <span class="item-time">${fmtTime(c.ultima_mensagem_em)}</span>
           </div>
-          <div class="item-produto">${escapeHtml(c.produto || '— sem produto —')}</div>
+          <div class="item-name">~${escapeHtml(nomeDisplay)}</div>
+          <div class="item-produto">📦 ${escapeHtml(c.produto || 'Sem produto identificado')}</div>
           <div class="item-badges">
             <span class="badge ${temp}">${tempLabel}</span>
             <span class="badge badge-status">${labelStatus(c.status)}</span>
@@ -86,12 +152,27 @@
       .replace(/"/g, '&quot;');
   }
 
+  function formatWhatsAppText(text) {
+    let html = escapeHtml(text || '');
+    // WhatsApp Markdown: *bold*, _italic_, ~strike~
+    html = html.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+    html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+    html = html.replace(/~(.*?)~/g, '<del>$1</del>');
+    return html.replace(/\n/g, '<br/>');
+  }
+
   function renderMensagens(payload) {
     const { atendimento, mensagens } = payload;
     const numDisplay = String(payload.numero).replace('@c.us', '');
     const nomeDisplay = String(payload.nome);
+
+    const isFirstLoad = (lastRenderedNumero !== payload.numero);
+    if (isFirstLoad) {
+      lastRenderedNumero = payload.numero;
+      lastMessagesCount = 0;
+    }
     elChatHead.innerHTML = `
-    <div class="chat-head-inner" style="align-items: center; display: flex; gap: 10px;">
+    <div class="chat-head-inner">
       <button id="btn-voltar" class="btn btn-ghost" style="padding: 5px 10px; border: none; font-size: 1.2rem; display: none;"> ← </button>
 
       <div style="flex: 1;">
@@ -100,7 +181,7 @@
           <div class="chat-nome">~${escapeHtml(nomeDisplay)}</div>
         </div>
         <div class="chat-meta">
-          ${escapeHtml(atendimento.produto || 'Produto não informado')} · ${labelStatus(atendimento.status)}
+          📦 ${escapeHtml(atendimento.produto || 'Produto não informado')} · ${labelStatus(atendimento.status)}
           · ${atendimento.temperatura === 'quente' ? '🔥 Quente' : '❄️ Frio'}
         </div>
       </div>
@@ -120,16 +201,57 @@
       elMensagens.innerHTML = '<div class="empty-chat">Sem mensagens nesta conversa.</div>';
     } else {
       elMensagens.innerHTML = mensagens
-        .map(
-          (m) => `
-        <div class="msg ${m.de}">
-          <div>${escapeHtml(m.texto).replace(/\n/g, '<br/>')}</div>
-          <div class="msg-meta">${m.de} · ${fmtTime(m.criado_em)}</div>
-        </div>`
-        )
+        .map((m) => {
+          // Ajusta a classe se a mensagem for do atendente (atendente vs bot)
+          let tipo = m.de;
+          let nomeExibicao = m.de;
+
+          if (m.de === 'atendente' || m.de === 'bot') {
+              if (m.texto.includes('Olá, me chamo') || m.de === 'atendente') {
+                  tipo = 'atendente';
+                  nomeExibicao = 'Atendente';
+              } else {
+                  tipo = 'bot';
+                  nomeExibicao = '🤖 Bot';
+              }
+          } else {
+              nomeExibicao = 'Cliente';
+          }
+
+          return `
+          <div class="msg ${tipo}">
+            <div>${formatWhatsAppText(m.texto)}</div>
+            <div class="msg-meta">${nomeExibicao} · ${fmtTime(m.criado_em)}</div>
+          </div>`;
+        })
         .join('');
     }
-    elMensagens.scrollTop = elMensagens.scrollHeight;
+
+    if (isFirstLoad) {
+      // Primeira carga: rola para o final sem mostrar indicador
+      setTimeout(() => {
+        elMensagens.scrollTop = elMensagens.scrollHeight;
+        elIndicator.classList.add('hidden');
+      }, 10);
+    } else {
+      // Tick de atualização: se chegaram novas mensagens
+      const novasMensagens = (mensagens && mensagens.length > lastMessagesCount);
+      if (novasMensagens) {
+        const isNearBottom = elMensagens.scrollHeight - elMensagens.scrollTop <= elMensagens.clientHeight + 50;
+        if (!isNearBottom) {
+          elIndicator.classList.remove('hidden'); // Exibe o botão flutuante se não estiver no final
+        } else {
+          // Se o usuário está colado embaixo e o contato envia algo, rola o pouquinho que falta
+          setTimeout(() => {
+            elMensagens.scrollTop = elMensagens.scrollHeight;
+          }, 10);
+        }
+      }
+    }
+    
+    if (mensagens) {
+      lastMessagesCount = mensagens.length;
+    }
 
     elComposer.hidden = false;
     const st = atendimento.status;
@@ -167,15 +289,17 @@
       if (selectedNumero) {
         await loadConversa();
       } else {
-        elChatHead.innerHTML =
-          '<div class="chat-head-placeholder"><span>Selecione uma conversa na lista</span></div>';
+        elChatHead.innerHTML = `
+          <div class="chat-head-placeholder">
+            <div class="placeholder-icon">💬</div>
+            <span>Selecione uma conversa na lista para começar</span>
+          </div>`;
         elMensagens.innerHTML = '';
         elComposer.hidden = true;
       }
     } catch (e) {
       console.warn(e);
-      elLista.innerHTML = `<div class="empty-lista">Não foi possível falar com a API. Abra o painel em<br/>
-        <strong>http://localhost:3000/painel-atendimento/index.html</strong><br/>com o bot rodando (<code>node index.js</code>).</div>`;
+      elLista.innerHTML = `<div class="empty-lista">Não foi possível falar com a API.<br/>Verifique se o bot está rodando.</div>`;
     }
   }
 
@@ -189,6 +313,10 @@
       });
       elInput.value = '';
       await loadConversa();
+      setTimeout(() => {
+        elMensagens.scrollTop = elMensagens.scrollHeight;
+        elIndicator.classList.add('hidden');
+      }, 10);
       await loadLista();
     } catch (e) {
       alert(e.message);
@@ -200,6 +328,16 @@
     try {
       const enc = encodeURIComponent(selectedNumero);
       await fetchJson('/api/assumir/' + enc, { method: 'POST' });
+
+      // Envio automático da apresentação do atendente
+      if (atendenteNome) {
+        const txtApresentacao = `Olá, me chamo ${atendenteNome} e vou continuar o seu atendimento! 🚀`;
+        await fetchJson('/api/responder', {
+          method: 'POST',
+          body: JSON.stringify({ numero: selectedNumero, texto: txtApresentacao })
+        });
+      }
+
       await loadConversa();
       await loadLista();
     } catch (e) {
