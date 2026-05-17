@@ -18,7 +18,7 @@ Os GIFs abaixo demonstram o fluxo completo da plataforma.
 
 **Versão Mobile**
 <br>
-<img src="assets/videos/demophonegif.gif" alt="Demonstração Mobile" width="300" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="assets/videos/demophonegif.gif" alt="Demonstração Mobile" width="70%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ---
 
@@ -111,7 +111,7 @@ Para fazer tudo funcionar de forma integrada (Front-end + Bot):
    ```
 
 ### 3. Links de Acesso Local
-Com o Vite rodando, você pode acessar:
+Com o Vite rodando, você pode acessar(atualmente está configurado para funcionar com tmole):
 - **Landing Faroni**: [http://localhost:5173/Faroni/Landing/index.html](http://localhost:5173/Faroni/Landing/index.html)
 - **Vitrine Faroni**: [http://localhost:5173/Faroni/Vitrine/index.html](http://localhost:5173/Faroni/Vitrine/index.html)
 - **Admin Faroni**: [http://localhost:5173/Faroni/AdminPage/admin.html](http://localhost:5173/Faroni/AdminPage/admin.html)
@@ -123,7 +123,7 @@ Com o Vite rodando, você pode acessar:
 ## 🛠️ Tecnologias Utilizadas
 
 **Site E-commerce & Frontend:**
-- HTML, CSS, JavaScript (Vanilla)
+- HTML, CSS, JavaScript 
 - Vite (Build e Dev Server)
 - Express & CORS
 
@@ -133,6 +133,7 @@ Com o Vite rodando, você pode acessar:
 - Express
 - MySQL2
 - `qrcode-terminal`
+- TunnelMole(para expor localhost na net)
 
 ---
 
