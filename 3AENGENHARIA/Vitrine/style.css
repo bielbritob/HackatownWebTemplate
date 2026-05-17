@@ -33,14 +33,6 @@ header {
     color: var(--primary);
 }
 
-/*MEDIA 3AENGENHARIA TXT*/
-@media (max-width: 768px) {
-    .logo-box {
-        gap: 5px;
-        margin-right: 10px;
-    }
-    .logo-box h1 { display: none; }
-}
 
 
 /* 3a ENGENHARIA TXT */
@@ -52,11 +44,29 @@ header {
   text-decoration: none;
 }
 
+/*sumir no celular com o 3a engnharia txt*/
+@media (max-width: 768px) {
+  .logo-txt {
+    display: none;
+  }
+}
+
 .img-container {
     width: 65px;
     display: flex;
     align-items: center;
 }
+
+@media (max-width: 768px) {
+  .img-container {
+    width: 65px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: -3px;
+  }
+}
+
 
 /* BUSCA */
 .search-wrapper {
@@ -172,7 +182,7 @@ header {
 }
 
 .img-wrapper { width: 100%; height: 220px; overflow: hidden; background: var(--card-img-bg); }
-.img-wrapper img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+.img-wrapper img { width: 100%; height: 100%; object-fit: contain; padding: 0; }
 
 /*body textos*/
 .card-body { padding: 20px; }

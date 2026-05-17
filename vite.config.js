@@ -56,6 +56,10 @@ export default defineConfig({
         target: 'http://127.0.0.1:80',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/projeto_php/, '/projeto_01_hackatown')
+      },
+      '/projeto_01_hackatown': {
+        target: 'http://127.0.0.1:80',
+        changeOrigin: true
       }
     }
   },
@@ -68,6 +72,8 @@ export default defineConfig({
         faroniLogin: path.resolve(__dirname, 'Faroni/LoginAdmin/LoginAdmin.html'),
         engLanding: path.resolve(__dirname, '3AENGENHARIA/Landing/index.html'),
         engVitrine: path.resolve(__dirname, '3AENGENHARIA/Vitrine/index.html'),
+        engAdmin: path.resolve(__dirname, '3ENGENHARIA/AdminPage/admin.html'),
+        engLoginAdmin: path.resolve(__dirname, '3ENGENHARIA/LoginAdmin/loginadmin.html'),
         painelAtendimento: path.resolve(__dirname, '3AENGENhARIA/painel-atendimento/index.html')
       }
     }

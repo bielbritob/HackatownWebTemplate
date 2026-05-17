@@ -10,13 +10,13 @@
 <body>
 
 <header class="adm-header">
-    <div class="logo-box">
-        <div class="logo-circle">
-
-            <img href="/3aengenharia/landing/index.html" src="../../assets/3AengICO.jpg" alt="Logo Faroni" onerror="this.style.display='none'">
-        </div>
-      <a href="/3aengenharia/landing/index.html">3A ENGENHARIA</a>
+  <div class="logo-box">
+    <div class="logo-circle">
+      <a href="../Landing/index.html"><img class="img-container" src="../../assets/3AengICO.jpg" alt="Logo"></a>
     </div>
+    <a class="logo-txt" href="/3aengenharia/landing/index.html">3A ENGENHARIA</a>
+
+  </div>
     <span class="admin-badge">PAINEL ADMIN</span>
     <div class="loc-box">Porto Velho, RO</div>
 </header>
@@ -46,8 +46,16 @@
                 <input type="text" id="desc" placeholder="Breve descrição do produto">
             </div>
             <div class="form-group form-full">
-                <label for="img">URL da imagem</label>
-                <input type="text" id="img" placeholder="https://exemplo.com/imagem.jpg">
+                <label>Imagem do Produto</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="img" placeholder="URL da imagem (https://...)" style="flex: 2;">
+                    <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">OU</span>
+                    <label class="custom-file-upload" style="flex: 1; margin: 0;">
+                        <span id="img-file-name">📸 Enviar Arquivo...</span>
+                        <input type="file" id="img-file" accept="image/*" onchange="document.getElementById('img-file-name').textContent = this.files[0] ? '📸 ' + this.files[0].name : '📸 Enviar Arquivo...'">
+                    </label>
+                </div>
+                <small style="color: var(--text-subtle, #64748b); font-size: 11px; margin-top: -4px;">Se enviar um arquivo, ele passará pela Inteligência Artificial para remover o fundo.</small>
             </div>
         </div>
         <button class="btn-add" id="btn-adicionar">
@@ -113,8 +121,16 @@
                 <input type="text" id="edit-desc">
             </div>
             <div class="form-group form-full">
-                <label for="edit-img">URL da imagem</label>
-                <input type="text" id="edit-img">
+                <label>Imagem do Produto</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" id="edit-img" placeholder="URL da imagem (https://...)" style="flex: 2;">
+                    <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">OU</span>
+                    <label class="custom-file-upload" style="flex: 1; margin: 0;">
+                        <span id="edit-img-file-name">📸 Enviar Nova Foto...</span>
+                        <input type="file" id="edit-img-file" accept="image/*" onchange="document.getElementById('edit-img-file-name').textContent = this.files[0] ? '📸 ' + this.files[0].name : '📸 Enviar Nova Foto...'">
+                    </label>
+                </div>
+                <small style="color: var(--text-subtle, #64748b); font-size: 11px; margin-top: -4px;">Se enviar um arquivo, ele passará pela Inteligência Artificial.</small>
             </div>
         </div>
         <div class="modal-actions">
