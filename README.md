@@ -6,21 +6,38 @@ O objetivo do hackathon foi desenvolver um sistema completo de e-commerce(landin
 
 ---
 
-##  Demo (customer view)
-- pc
- ![demo.gif](assets/videos/demo.gif)
-- phone
-![demophonegif.gif](assets/videos/demophonegif.gif)
+## 📸 Demonstração do Projeto
+
+Os GIFs abaixo demonstram o fluxo completo da plataforma.
+
+### 🛍️ Visão do Cliente (Customer View)
+
+**Versão Desktop**
+<br>
+<img src="assets/videos/demo.gif" alt="Demonstração PC" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Versão Mobile**
+<br>
+<img src="assets/videos/demophonegif.gif" alt="Demonstração Mobile" width="300" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
 ---
 
-## Demo (conpany view)
-- adminPage(manage db)
-![DemoAdmin.gif](assets/videos/DemoAdmin.gif)
-- adminPage(add itens, automatically remove background from imported image) 
-![DemoRemoveBG.gif](assets/videos/DemoRemoveBG.gif)
+### ⚙️ Visão da Empresa (Company View)
 
-- CRM
-![DemoCRM.gif](assets/videos/DemoCRM.gif)
+**Dashboard de Administração (Gerenciamento do BD)**
+<br>
+<img src="assets/videos/DemoAdmin.gif" alt="Demonstração Admin" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Adição de Produtos com Remoção Automática de Fundo (IA)**
+<br>
+<img src="assets/videos/DemoRemoveBG.gif" alt="Demonstração Remoção de Fundo" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Painel de Atendimento (CRM via WhatsApp)**
+<br>
+<img src="assets/videos/DemoCRM.gif" alt="Demonstração CRM" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+---
+
 ## ✨ Funcionalidades (Conteúdo do Template)
 
 * **Landing Page**: Página institucional sobre a empresa.
