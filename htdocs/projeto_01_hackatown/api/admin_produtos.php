@@ -11,7 +11,7 @@ set_time_limit(300);
 
 $host = "127.0.0.1";
 $user = "root";
-$pass = "k2g9ekk6"; // Senha do seu MySQL Server 9.7
+$pass = ""; // Senha do seu MySQL Server 9.7
 $dbname = "3a_engenharia_db";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
