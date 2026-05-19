@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 $host = "localhost";
 $user = "root";
-$pass = "k2g9ekk6"; // Senha padrão do XAMPP é vazia
+$pass = ""; // Senha padrão do XAMPP é vazia
 $dbname = "3a_engenharia_db";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
