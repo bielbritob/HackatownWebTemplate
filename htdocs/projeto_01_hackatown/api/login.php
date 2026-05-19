@@ -9,7 +9,7 @@ header('Content-Type: application/json');
 
 $host = "127.0.0.1";
 $user = "root";
-$pass = "k2g9ekk6"; 
+$pass = ""; 
 $dbname = "3a_engenharia_db"; // Db da 3A
 
 $conn = new mysqli($host, $user, $pass, $dbname);
