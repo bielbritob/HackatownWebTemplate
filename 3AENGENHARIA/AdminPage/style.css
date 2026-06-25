@@ -43,6 +43,9 @@ body {
     text-decoration: none;
 }
 
+
+
+
 .logo-circle {
     width: 65px;
     height: 65px;
@@ -85,8 +88,8 @@ body {
     font-weight: 600;
 }
 
-@media (max-width: 600px) {
-    .logo-box h1 { display: none; }
+@media (max-width: 768px) {
+    .logo-box > a { display: none; }
     .loc-box { display: none; }
 }
 
@@ -164,6 +167,32 @@ body {
 .form-group input:focus {
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
+}
+
+.custom-file-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 14px;
+    border: 1px dashed var(--primary);
+    border-radius: 8px;
+    background: var(--primary-muted-bg);
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+}
+
+.custom-file-upload:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
 }
 
 .input-currency-wrapper {
@@ -307,7 +336,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 10px;
+    padding: 0;
 }
 
 .card-info {

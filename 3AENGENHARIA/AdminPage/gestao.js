@@ -20,8 +20,51 @@ function atualizarContador(lista) {
 }
 
 function limparForm() {
-    ['nome', 'preco', 'desc', 'img'].forEach(id => {
+    ['nome', 'preco', 'desc', 'img', 'img-file'].forEach(id => {
         document.getElementById(id).value = '';
+    });
+    const imgFileName = document.getElementById('img-file-name');
+    if (imgFileName) imgFileName.textContent = '📸 Enviar Arquivo...';
+}
+
+// Comprimir imagem antes de enviar para não estourar o payload (especial para celular)
+async function compressImage(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                const max_size = 1000;
+                
+                if (width > height) {
+                    if (width > max_size) {
+                        height *= max_size / width;
+                        width = max_size;
+                    }
+                } else {
+                    if (height > max_size) {
+                        width *= max_size / height;
+                        height = max_size;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                canvas.toBlob((blob) => {
+                    resolve(new File([blob], file.name, {
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    }));
+                }, 'image/jpeg', 0.8); // 80% de qualidade
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
     });
 }
 
@@ -68,7 +111,7 @@ function renderizarCards(produtos) {
                 <img
                     src="${prod.img}"
                     alt="${prod.nome}"
-                    onerror="this.src='https://via.placeholder.com/300x200?text=Sem+imagem'"
+
                 >
             </div>
             <div class="card-info">
@@ -104,6 +147,8 @@ async function adicionarProduto() {
     let preco = document.getElementById('preco').value.trim();
     const desc  = document.getElementById('desc').value.trim();
     const img   = document.getElementById('img').value.trim();
+    const fileInput = document.getElementById('img-file');
+    const btnSubmit = document.getElementById('btn-adicionar');
 
     preco = formatarPreco(preco);
 
@@ -112,23 +157,39 @@ async function adicionarProduto() {
         return;
     }
 
-    const dados = {
-        action: 'adicionar',
-        nome,
-        preco,
-        desc,
-        img
-    };
+    const formData = new FormData();
+    formData.append('action', 'adicionar');
+    formData.append('nome', nome);
+    formData.append('preco', preco);
+    formData.append('desc', desc);
+    formData.append('img', img);
+
+    // UI Loading state
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = '⏳ Processando Imagem...';
+    btnSubmit.disabled = true;
 
     try {
+        if (fileInput.files.length > 0) {
+            btnSubmit.innerHTML = '⏳ Comprimindo...';
+            const compressedFile = await compressImage(fileInput.files[0]);
+            formData.append('foto_produto', compressedFile);
+            btnSubmit.innerHTML = '⏳ Processando IA...';
+        }
+
+        // Remove Content-Type header so the browser sets it automatically with the boundary
         const response = await fetch(API_URL, {
             method: 'POST',
-            body: JSON.stringify(dados)
+            body: formData
         });
         const result = await response.json();
 
         if (result.success) {
             mostrarNotif('✅ Produto adicionado com sucesso!');
+            if (result.msg_python) {
+                // Alerta opcional para mostrar o que deu erro no Python mas ainda salvou a imagem
+                alert(result.msg_python);
+            }
             limparForm();
             listarProdutos();
         } else {
@@ -137,6 +198,9 @@ async function adicionarProduto() {
     } catch (error) {
         console.error('Erro ao adicionar:', error);
         mostrarNotif('❌ Erro de conexão com o servidor.');
+    } finally {
+        btnSubmit.innerHTML = originalText;
+        btnSubmit.disabled = false;
     }
 }
 
@@ -188,6 +252,9 @@ window.prepararEdicao = (prod) => {
     document.getElementById('edit-preco').value = prod.preco;
     document.getElementById('edit-desc').value = prod.descricao || '';
     document.getElementById('edit-img').value = prod.img || '';
+    document.getElementById('edit-img-file').value = '';
+    const editImgFileName = document.getElementById('edit-img-file-name');
+    if (editImgFileName) editImgFileName.textContent = '📸 Enviar Nova Foto...';
 
     modalEditar.classList.remove('hidden');
 };
@@ -202,6 +269,8 @@ btnSaveEdit.addEventListener('click', async () => {
     let preco = document.getElementById('edit-preco').value.trim();
     const desc = document.getElementById('edit-desc').value.trim();
     const img = document.getElementById('edit-img').value.trim();
+    const fileInput = document.getElementById('edit-img-file');
+    const btnSubmit = document.getElementById('btn-save-edit');
 
     preco = formatarPreco(preco);
 
@@ -210,24 +279,38 @@ btnSaveEdit.addEventListener('click', async () => {
         return;
     }
 
-    const dadosEdicao = {
-        action: 'editar',
-        id: id,
-        nome: nome,
-        preco: preco,
-        desc: desc,
-        img: img
-    };
+    const formData = new FormData();
+    formData.append('action', 'editar');
+    formData.append('id', id);
+    formData.append('nome', nome);
+    formData.append('preco', preco);
+    formData.append('desc', desc);
+    formData.append('img', img);
+
+    // UI Loading state
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = '⏳ Processando Imagem...';
+    btnSubmit.disabled = true;
 
     try {
+        if (fileInput.files.length > 0) {
+            btnSubmit.innerHTML = '⏳ Comprimindo...';
+            const compressedFile = await compressImage(fileInput.files[0]);
+            formData.append('foto_produto', compressedFile);
+            btnSubmit.innerHTML = '⏳ Processando IA...';
+        }
+
         const response = await fetch(API_URL, {
             method: 'POST',
-            body: JSON.stringify(dadosEdicao)
+            body: formData
         });
         const result = await response.json();
 
         if (result.success) {
             mostrarNotif('✏️ Produto atualizado!');
+            if (result.msg_python) {
+                alert(result.msg_python);
+            }
             modalEditar.classList.add('hidden');
             listarProdutos();
         } else {
@@ -236,6 +319,9 @@ btnSaveEdit.addEventListener('click', async () => {
     } catch (error) {
         console.error('Erro ao editar:', error);
         mostrarNotif('❌ Erro de conexão com o servidor.');
+    } finally {
+        btnSubmit.innerHTML = originalText;
+        btnSubmit.disabled = false;
     }
 });
 

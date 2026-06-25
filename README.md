@@ -1,139 +1,142 @@
-# `Hackatown Web Template`
+# 🏆 Hackatown 2026 - 1st Place Winning Project
 
-### Repositorio usado em um hackathon que o objetivo era fazer um sistema e-commerce :
+Este repositório contém o projeto vencedor do **1º lugar no Hackatown 2026**! 🥇
 
-#### `conteudo do template:`
+O objetivo do hackathon foi desenvolver um sistema completo de e-commerce(landingPage, vitrine e chatbot). Nossa equipe criou uma solução robusta contendo uma **Landing Page**, **Vitrine de Produtos**, **Admin Page** e um **Chatbot de WhatsApp** integrado a um painel de atendimento (CRM), além de todas as páginas estarem responsivas.
 
-* **LandingPage**(sobre a empresa)
-* **Vitrines**(produtos da empresa)
-* **Admin em HTML/CSS/JS**(manage db, subdominio)
-* **tema css responsivo global(por marca)**
-* **API PHP** (exemplo em `htdocs/`)
-* **bot WhatsApp** (`bot-wpp`, feito com wweb.js) 
-* **painel de atendimento**(CRM)
+---
 
-### OBS: 
-Projeto desenvolvido de maneira a expor o localhost, expor oq está rodando em sua maquina através do tunnelmole('**TmoleQRcode.js**'). Apenas para testes. Sinta-se livre para adaptar.
+## 📸 Demonstração do Projeto
 
-## DEMO:
-  https://youtu.be/15k0fYMb2mc
-## Estrutura
+Os GIFs abaixo demonstram o fluxo completo da plataforma.
 
-| Pasta | Conteúdo |
+### 🛍️ Visão do Cliente (Customer View)
+
+**Versão Desktop**
+<br>
+<img src="assets/videos/demo.gif" alt="Demonstração PC" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Versão Mobile**
+<br>
+<img src="assets/videos/demophonegif.gif" alt="Demonstração Mobile" width="70%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+---
+
+### ⚙️ Visão da Empresa (Company View)
+
+**Dashboard de Administração (Gerenciamento do BD)**
+<br>
+<img src="assets/videos/DemoAdmin.gif" alt="Demonstração Admin" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Adição de Produtos com Remoção Automática de Fundo (IA)**
+<br>
+<img src="assets/videos/DemoRemoveBG.gif" alt="Demonstração Remoção de Fundo" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+**Painel de Atendimento (CRM via WhatsApp)**
+<br>
+<img src="assets/videos/DemoCRM.gif" alt="Demonstração CRM" width="100%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+---
+
+## ✨ Funcionalidades (Conteúdo do Template)
+
+* **Landing Page**: Página institucional sobre a empresa.
+* **Vitrines**: Exibição dos produtos da empresa.
+* **Painel de Atendimento (CRM)**: Interface web para gerenciar o atendimento via WhatsApp.
+* **Bot de WhatsApp**: Desenvolvido com `whatsapp-web.js` para automação e interação com clientes.
+* **Admin Dashboard (HTML/CSS/JS)**: Gerenciamento do banco de dados e subdomínios.
+* **API PHP**: Exemplo de integração em `htdocs/`.
+* **Tema Global Responsivo**: Customizável por marca/empresa.
+* **Exposição Local**: Integração com Tunnelmole (`TmoleQRcode.js`) para expor o localhost na internet facilmente durante testes.
+
+---
+
+## 📂 Estrutura do Projeto
+
+| Pasta | Descrição |
 |--------|-----------|
-| `Faroni/` | Marca exemplo: `Landing/`, `Vitrine/`, `AdminPage/`, `LoginAdmin/`, `theme.css` |
-| `3AENGENHARIA/` | Segunda marca (landing + vitrine + `theme.css`) |
-| `assets/` | Imagens e ficheiros estáticos partilhados (ex.: logos referenciados como `../../assets/...`) |
-| `painel-atendimento/` | Painel web do atendente (usa a API do `bot-wpp` em produção) |
-| `bot-wpp/` | Node: WhatsApp + Express (`npm` próprio — ver abaixo) |
-| `htdocs/projeto_01_hackatown/` | API PHP de exemplo (login, produtos) |
-| `theme.css` (raiz) | Opcional; cada marca pode ter o seu em `Marca/theme.css` |
-| `.run/` | Configurações de execução **JetBrains** (WebStorm) versionadas |
-| `.vscode/` | Sugestões e definições para **VS Code** + Live Server |
+| `Faroni/` | Marca exemplo contendo `Landing/`, `Vitrine/`, `AdminPage/`, `LoginAdmin/`, e `theme.css`. |
+| `3AENGENHARIA/` | Segunda marca exemplo (landing + vitrine + `theme.css`). |
+| `assets/` | Imagens e arquivos estáticos compartilhados (ex.: logos referenciados como `../../assets/...`). |
+| `painel-atendimento/` | Painel web do atendente (consome a API do `bot-wpp`). |
+| `bot-wpp/` | Bot de WhatsApp (Node.js + Express + `whatsapp-web.js`). |
+| `htdocs/projeto_01_hackatown/` | API PHP de exemplo (login, produtos). |
+| `theme.css` | CSS global opcional na raiz (cada marca pode ter o seu em `Marca/theme.css`). |
+| `.run/` | Configurações de execução para **JetBrains** (WebStorm). |
+| `.vscode/` | Configurações para **VS Code** e Live Server. |
 
-## Pré-requisitos
+---
 
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
 - **Node.js** 18+ (recomendado LTS)
-- **npm** (vem com o Node)
-- Para PHP/MySQL: **XAMPP** (ou similar) + **MySQL 9.7 LTS** + **Beekeeper** (opcional) + **schema_db especifica**(./bot-wpp/sql/schema_atendimento.sql)
+- **npm**
+- **XAMPP** (ou similar) + **MySQL** (para a API PHP e banco de dados do bot)
+- **Schema DB**: Execute o script em `./bot-wpp/sql/schema_atendimento.sql` no seu MySQL.
 
-## packages usadas:
-  ### `botwpp:`
-- whatsapp-web.js
-- qrcode-terminal
-- cors
-- express
-- mysql2
-### `site ecommerce:`
-- cors
-- express
-### `TmoleQRcode(expoe localhost na net e gera qr code com link)`
-- qrcode-terminals
+### 1. Instalação de Dependências
 
-## Instalação (clone em qualquer máquina)
-
-Na raiz do repositório:
-
+Na raiz do repositório, instale as dependências gerais:
 ```bash
 npm install
 ```
 
-Para o bot (pasta separada com as suas dependências):
-
+Em seguida, instale as dependências específicas do Bot de WhatsApp:
 ```bash
-cd bot-wpp && npm install && cd ..
+cd bot-wpp
+npm install
+cd ..
 ```
 
-## Forma recomendada de ver o site: **Vite** (`npm run dev`)
-### Forma recomendada de fazer tudo funcionar com o bot:
-1.   rodar no root do projeto:
-     `cd .\bot-wpp\ && node index.js`
-2.   apos o bot dizer que tá on, em outro terminal rode:
-    `npm run dev`
-3. e então rode o `TmoleQRcode.js`
+### 2. Rodando a Aplicação (Recomendado)
 
+Para fazer tudo funcionar de forma integrada (Front-end + Bot):
 
-Funciona igual no WebStorm, VS Code ou terminal. O Vite:
+1. **Inicie o Bot de WhatsApp:**
+   Abra um terminal, navegue até a pasta do bot e inicie:
+   ```bash
+   cd bot-wpp
+   node index.js
+   ```
+2. **Inicie o Front-end (Vite):**
+   Após o bot indicar que está online, abra **outro terminal** na raiz do projeto e rode:
+   ```bash
+   npm run dev
+   ```
+3. **Acesso Externo (Opcional):**
+   Para expor seu localhost na internet, execute o Tunnelmole:
+   ```bash
+   node TmoleQRcode.js
+   ```
 
-- Serve o projeto na raiz (caminhos `../../assets/...` e `../theme.css` funcionam)
-- Expõe a pasta `assets/` em `http://localhost:5173/assets/...`
-- Faz **proxy** de `/api/*` para `http://127.0.0.1:3000` (útil para o painel falar com o bot
+### 3. Links de Acesso Local
+Com o Vite rodando, você pode acessar(atualmente está configurado para funcionar com tmole):
+- **Landing Faroni**: [http://localhost:5173/Faroni/Landing/index.html](http://localhost:5173/Faroni/Landing/index.html)
+- **Vitrine Faroni**: [http://localhost:5173/Faroni/Vitrine/index.html](http://localhost:5173/Faroni/Vitrine/index.html)
+- **Admin Faroni**: [http://localhost:5173/Faroni/AdminPage/admin.html](http://localhost:5173/Faroni/AdminPage/admin.html)
+- **Painel de Atendimento (CRM)**: [http://localhost:5173/painel-atendimento/index.html](http://localhost:5173/painel-atendimento/index.html)
+- **3A Engenharia**: [http://localhost:5173/3AENGENHARIA/Landing/index.html](http://localhost:5173/3AENGENHARIA/Landing/index.html)
 
-```bash
-npm run dev
-```
+---
 
-Abria por padrao a landing Faroni. Outros links úteis:
+## 🛠️ Tecnologias Utilizadas
 
-- Landing Faroni: `http://localhost:5173/Faroni/Landing/index.html`
-- Vitrine Faroni: `http://localhost:5173/Faroni/Vitrine/index.html`
-- Admin Faroni: `http://localhost:5173/Faroni/AdminPage/admin.html`
-- Login admin: `http://localhost:5173/Faroni/LoginAdmin/LoginAdmin.html`
-- Painel atendimento: `http://localhost:5173/painel-atendimento/index.html` (com o bot a correr na porta 3000)
-- 3A Engenharia: `http://localhost:5173/3AENGENHARIA/Landing/index.html` e `.../Vitrine/index.html`
+**Site E-commerce & Frontend:**
+- HTML, CSS, JavaScript 
+- Vite (Build e Dev Server)
+- Express & CORS
 
-Build estático (para deploy sem servidor Node):
+**Bot WhatsApp & Backend:**
+- Node.js
+- `whatsapp-web.js`
+- Express
+- MySQL2
+- `qrcode-terminal`
+- TunnelMole(para expor localhost na net)
 
-```bash
-npm run build
-```
+---
 
-Saída em `dist/`. Para pré-visualizar o build: `npm run preview`.
+## 📝 Licença
+Distribuído sob a licença ISC. Veja `package.json` para mais informações.
 
-## VS Code + **Live Server**
-
-1. Abre a **pasta raiz** do repositório no VS Code (File → Open Folder).
-2. Instala a extensão **Live Server** (o projeto sugere extensões ao abrir).
-3. Abre um HTML (ex.: `Faroni/Landing/index.html`) e usa **“Open with Live Server”** (ou clique em “Go Live”).
-
-Com `liveServer.settings.root` na raiz do workspace (já definido em `.vscode/settings.json`), os URLs ficam alinhados com os caminhos relativos (`/Faroni/...`, `/assets/...`).
-
-**Nota:** Live Server **não** faz proxy da API do bot. Para o painel com `/api`, usa **Vite** com o bot, ou abre o painel em `http://localhost:3000/painel-atendimento/index.html` quando só o bot estiver ativo.
-
-## JetBrains **WebStorm**
-
-- As configurações partilhadas estão em **`.run/`**:
-  - **Vite (site estático)** → `npm run dev`
-  - **Bot WhatsApp + API** → `npm run bot` (equivale a `node bot-wpp/index.js`)
-- Abre **Run → Edit Configurations** e escolhe uma destas (o WebStorm importa ficheiros `.run/*.run.xml` na raiz).
-
-## Bot WhatsApp e painel
-
-```bash
-npm run bot
-```
-
-Ou: `cd bot-wpp && node index.js`
-
-- API e painel estático: `http://localhost:3000` (ajusta `PORT` se precisares)
-- Migrações SQL: `bot-wpp/sql/schema_atendimento.sql`
-
-Detalhes do fluxo bot ↔ painel ↔ MySQL mantêm-se na pasta `bot-wpp` e no código comentado.
-
-## API PHP (XAMPP)
-
-Coloca a pasta `htdocs/projeto_01_hackatown` (ou o projeto PHP completo) no document root do Apache e configura a base de dados que o PHP e o bot usarem. O front em HTML pode apontar para URLs absolutas da API em desenvolvimento.
-
-## Licença
-
-ISC (conforme `package.json`).

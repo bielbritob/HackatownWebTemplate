@@ -77,8 +77,8 @@ body {
 }
 
 .logo-circle {
-  width: 36px;
-  height: 36px;
+  width: 58px;
+  height: 56px;
   background-color: var(--primary);
   color: #fff;
   border-radius: 50%;
@@ -603,7 +603,7 @@ body {
   }
 
   .global-header h1 {
-    font-size: 0.9rem;
+    display: none;
   }
 
   .sidebar {

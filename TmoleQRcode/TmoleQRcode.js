@@ -6,7 +6,10 @@ console.log("🚀 Iniciando Tunnelmole e gerando QR Code clicável...");
 const tmole = spawn('tmole', ['5173'], { shell: true });
 
 tmole.stdout.on('data', (data) => {
-  const output = data.toString();
+  let output = data.toString();
+
+  // Remove ANSI escape codes para garantir que a URL saia limpa
+  output = output.replace(/\x1b\[[0-9;]*m/g, '');
 
   // Regex melhorada para pegar a URL limpa
   const urlRegex = /(https:\/\/[^\s]+(?:holeo\.site|tunnelmole\.net|tunnelmole\.com))/g;
@@ -22,9 +25,8 @@ tmole.stdout.on('data', (data) => {
     console.log("🔗 " + fullUrl);
     console.log("=".repeat(40) + "\n");
 
-    // O segredo: 'small: false' gera um QR maior e mais fácil de ler
-    // e garantimos que passamos apenas a string da URL
-    qrcode.generate(fullUrl, { small: true });
+    // 'small: false' gera um QR maior e mais fácil de ler pelo celular (evita que a câmera leia como texto/OCR)
+    qrcode.generate(fullUrl, { small: false });
 
     console.log("\n📱 Aponte a câmera (deve aparecer 'Abrir Link')");
   }

@@ -39,3 +39,15 @@ button {
     cursor: pointer;
     font-weight: bold;
 }
+
+/*celular*/
+@media (max-width: 480px) {
+  .login-form,
+  .form-box {
+    padding: 24px; /* Diminui um pouco o espaço interno para sobrar mais tela */
+  }
+
+  body {
+    padding: 10px; /* Margem de segurança nas bordas do celular */
+  }
+}
