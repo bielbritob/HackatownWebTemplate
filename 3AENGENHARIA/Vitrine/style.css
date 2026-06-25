@@ -35,7 +35,7 @@ header {
 
 /*MEDIA 3AENGENHARIA TXT*/
 @media (max-width: 768px) {
-    .logo-box {
+    .logo-box a{
         gap: 5px;
         margin-right: 10px;
     }
@@ -50,6 +50,13 @@ header {
   text-transform: uppercase;
   color: var(--primary);
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  /* 3a ENGENHARIA TXT */
+  .logo-box a {
+    display: none;
+  }
 }
 
 .img-container {

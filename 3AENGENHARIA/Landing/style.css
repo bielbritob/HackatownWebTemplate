@@ -158,6 +158,9 @@ body {
     /*background-color: rgb(239 239 239 / 0.7);*/
     background: rgba(var(--primary-rgb), 0.09);
 }
+
+
+
 .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--primary);
@@ -166,7 +169,18 @@ body {
 }
 .hero-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 24px; line-height: 1.2; }
 .hero-description { font-size: 1.1rem; color: var(--text-soft); max-width: 600px; margin: 0 auto 32px auto; }
+
+@media (max-width: 768px) {
+  .hero-description {
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    max-width: 500px;
+    margin: 0 auto 32px auto;
+  }
+}
+
 .hero-actions { display: flex; flex-direction: column; gap: 16px; justify-content: center; align-items: center; }
+
 
 @media (min-width: 640px) { .hero-actions { flex-direction: row; } }
 
@@ -346,3 +360,61 @@ body {
 }
 
 
+/* ========================
+   MOBILE (max 768px)
+   ======================== */
+@media (max-width: 768px) {
+
+  /* Header */
+  .header {
+    padding: 0 4%;
+    gap: 8px;
+  }
+
+
+
+  .btn-catalogo,
+  .btn-catalogo:hover {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    border-radius: 6px;
+  }
+
+  /* Hero */
+  .hero-section {
+    padding: 100px 6% 48px;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+  }
+
+  /* About */
+  .about-section {
+    padding: 60px 6%;
+  }
+
+  .about-header h2 {
+    font-size: 1.75rem;
+  }
+
+  .about-header p {
+    font-size: 0.95rem;
+  }
+
+  /* Cards */
+  .features-grid {
+    padding: 0 6%;
+    grid-template-columns: 1fr;
+  }
+
+  .info-item {
+    text-align: center;
+    min-width: unset;
+    width: 100%;
+  }
+}

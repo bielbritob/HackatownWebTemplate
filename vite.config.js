@@ -68,7 +68,9 @@ export default defineConfig({
         faroniLogin: path.resolve(__dirname, 'Faroni/LoginAdmin/LoginAdmin.html'),
         engLanding: path.resolve(__dirname, '3AENGENHARIA/Landing/index.html'),
         engVitrine: path.resolve(__dirname, '3AENGENHARIA/Vitrine/index.html'),
-        painelAtendimento: path.resolve(__dirname, '3AENGENhARIA/painel-atendimento/index.html')
+        painelAtendimento: path.resolve(__dirname, '3AENGENHARIA/painel-atendimento/index.html'),
+        painelAdmin: path.resolve(__dirname, '3AENGENHARIA/LoginAdmin/LoginAdmin.html'),
+        AdminLogin: path.resolve(__dirname, '3AENGENHARIA/AdminPage/admin.html')
       }
     }
   }
